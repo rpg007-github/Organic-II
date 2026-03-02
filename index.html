@@ -140,9 +140,40 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   .toc-grid { grid-template-columns: 1fr; }
   .ref-table { font-size: .82rem; }
 }
+
+/* ─── WCAG 2.1 AA: Visible focus indicators ─── */
+:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+.tab-btn:focus-visible, .nav-btn:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+/* ─── Skip link ─── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: #005fcc;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <header>
   <h1>Organic Chemistry II</h1>
@@ -150,7 +181,7 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   <div class="badge">Essential Reference</div>
 </header>
 
-<div class="container">
+<div class="container" id="main-content" role="main">
 
 <!-- TABLE OF CONTENTS -->
 <div class="toc">
