@@ -140,9 +140,40 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   .toc-grid { grid-template-columns: 1fr; }
   .ref-table { font-size: .82rem; }
 }
+
+/* ─── WCAG 2.1 AA: Visible focus indicators ─── */
+:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+.tab-btn:focus-visible, .nav-btn:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+/* ─── Skip link ─── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: #005fcc;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <header>
   <h1>Organic Chemistry II</h1>
@@ -150,7 +181,7 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   <div class="badge">Essential Reference</div>
 </header>
 
-<div class="container">
+<div class="container" id="main-content" role="main">
 
 <!-- TABLE OF CONTENTS -->
 <div class="toc">
@@ -637,23 +668,23 @@ const fcCards = [
   {cat:"Aromatics",q:"Huckel's rule",a:"A compound is aromatic if it is cyclic, planar, fully conjugated, and has 4n+2 pi electrons (n=0,1,2...)."},
   {cat:"Aromatics",q:"Antiaromatic vs. nonaromatic?",a:"Antiaromatic: cyclic, planar, conjugated, 4n pi electrons (very unstable). Nonaromatic: fails at least one criterion."},
   {cat:"Aromatics",q:"Pyrrole vs. pyridine basicity?",a:"Pyridine is basic (lone pair in sp2 orbital, in plane). Pyrrole is not basic (lone pair in p orbital, part of aromatic pi system)."},
-  {cat:"Aromatics",q:"EAS general mechanism (2 steps)?",a:"1) Electrophile attacks pi system → arenium ion (rate-determining). 2) Proton lost → aromaticity restored."},
+  {cat:"Aromatics",q:"EAS general mechanism (2 steps)?",a:"1) Electrophile attacks pi system <span aria-hidden="true">→</span> arenium ion (rate-determining). 2) Proton lost <span aria-hidden="true">→</span> aromaticity restored."},
   {cat:"Aromatics",q:"Why are halogens ortho/para directors but deactivators?",a:"Lone pair resonance donates into ring (ortho/para directing). High electronegativity inductively withdraws (deactivating). Resonance controls regiochemistry; induction controls rate."},
   {cat:"Aromatics",q:"FC acylation advantages over alkylation?",a:"Acylium ions don't rearrange. Ketone product deactivates ring, preventing polyacylation. Alkylation has both problems."},
   {cat:"Aromatics",q:"What rings can't do Friedel-Crafts?",a:"Strongly deactivated rings: those with -NO2, -COR, -CN, -SO3H, or -NR3+ substituents."},
   {cat:"Aromatics",q:"Nucleophilic aromatic substitution requirements?",a:"Strong EWG (especially -NO2) ortho/para to leaving group. Goes through Meisenheimer complex (addition-elimination)."},
   {cat:"Carbonyls",q:"Why are aldehydes more reactive than ketones?",a:"Less steric hindrance (H vs R) and fewer electron-donating alkyl groups, so the carbonyl carbon is more electrophilic."},
-  {cat:"Carbonyls",q:"Grignard + HCHO product?",a:"Primary alcohol. Grignard adds R to formaldehyde's carbon. HCHO → 1° alcohol, RCHO → 2° alcohol, R2CO → 3° alcohol."},
-  {cat:"Carbonyls",q:"Imine vs. enamine formation?",a:"1° amine + carbonyl → imine (C=N). 2° amine + carbonyl → enamine (C=C-NR2). Both require mild acid catalyst."},
+  {cat:"Carbonyls",q:"Grignard + HCHO product?",a:"Primary alcohol. Grignard adds R to formaldehyde's carbon. HCHO <span aria-hidden="true">→</span> 1° alcohol, RCHO <span aria-hidden="true">→</span> 2° alcohol, R2CO <span aria-hidden="true">→</span> 3° alcohol."},
+  {cat:"Carbonyls",q:"Imine vs. enamine formation?",a:"1° amine + carbonyl <span aria-hidden="true">→</span> imine (C=N). 2° amine + carbonyl <span aria-hidden="true">→</span> enamine (C=C-NR2). Both require mild acid catalyst."},
   {cat:"Carbonyls",q:"What is an acetal? Why useful?",a:"Two -OR groups on the same carbon (from carbonyl + 2 ROH, acid cat.). Stable in base/neutral, cleaves in acid. Used as carbonyl protecting group."},
-  {cat:"Carbonyls",q:"Wittig reaction product?",a:"Alkene. Ph3P=CHR + C=O → C=C + Ph3P=O. Replaces the carbonyl oxygen with a carbon from the ylide."},
+  {cat:"Carbonyls",q:"Wittig reaction product?",a:"Alkene. Ph3P=CHR + C=O <span aria-hidden="true">→</span> C=C + Ph3P=O. Replaces the carbonyl oxygen with a carbon from the ylide."},
   {cat:"Carbonyls",q:"Wolff-Kishner conditions and product?",a:"N2H4 (hydrazine), KOH, high heat. Reduces ketone/aldehyde C=O all the way to CH2. Basic conditions."},
   {cat:"Acid Derivatives",q:"Reactivity order of acyl derivatives?",a:"Acid chloride > anhydride > ester ≈ thioester > amide > carboxylate. Better leaving group = more reactive."},
-  {cat:"Acid Derivatives",q:"Nucleophilic acyl substitution mechanism?",a:"Nucleophile attacks carbonyl carbon → tetrahedral intermediate → leaving group departs → new carbonyl forms. Different from addition (aldehydes/ketones) because a leaving group departs."},
-  {cat:"Acid Derivatives",q:"Fischer esterification?",a:"RCOOH + R'OH + H2SO4 (acid catalyst) ⇌ RCOOR' + H2O. Reversible; drive forward with excess alcohol or remove water."},
-  {cat:"Acid Derivatives",q:"Why is saponification irreversible?",a:"Ester + NaOH → RCOO⁻Na⁺ + R'OH. The carboxylate product is resonance-stabilized, so the reverse reaction is very unfavorable."},
+  {cat:"Acid Derivatives",q:"Nucleophilic acyl substitution mechanism?",a:"Nucleophile attacks carbonyl carbon <span aria-hidden="true">→</span> tetrahedral intermediate <span aria-hidden="true">→</span> leaving group departs <span aria-hidden="true">→</span> new carbonyl forms. Different from addition (aldehydes/ketones) because a leaving group departs."},
+  {cat:"Acid Derivatives",q:"Fischer esterification?",a:"RCOOH + R'OH + H2SO4 (acid catalyst) <span aria-hidden="true">⇌</span> RCOOR' + H2O. Reversible; drive forward with excess alcohol or remove water."},
+  {cat:"Acid Derivatives",q:"Why is saponification irreversible?",a:"Ester + NaOH <span aria-hidden="true">→</span> RCOO⁻Na⁺ + R'OH. The carboxylate product is resonance-stabilized, so the reverse reaction is very unfavorable."},
   {cat:"Acid Derivatives",q:"Why are amides so stable?",a:"The nitrogen lone pair delocalizes into the carbonyl (resonance), giving partial double-bond character to C-N. This makes the leaving group (NHR) very poor."},
-  {cat:"Acid Derivatives",q:"Conversion rule for acid derivatives?",a:"You can convert more reactive → less reactive (e.g., acid chloride → ester) but not the reverse without special reagents."},
+  {cat:"Acid Derivatives",q:"Conversion rule for acid derivatives?",a:"You can convert more reactive <span aria-hidden="true">→</span> less reactive (e.g., acid chloride <span aria-hidden="true">→</span> ester) but not the reverse without special reagents."},
   {cat:"Enolates",q:"What makes alpha-H acidic?",a:"The conjugate base (enolate) is resonance-stabilized: negative charge is shared between carbon and oxygen of the carbonyl."},
   {cat:"Enolates",q:"Kinetic vs. thermodynamic enolate?",a:"Kinetic: formed with LDA at -78°C, less substituted side. Thermodynamic: formed with weaker base at higher temp, more substituted (more stable)."},
   {cat:"Enolates",q:"Aldol reaction product?",a:"Beta-hydroxy carbonyl. Enolate of one carbonyl adds to another's C=O. With heat, dehydration gives alpha,beta-unsaturated carbonyl (aldol condensation)."},
@@ -665,9 +696,9 @@ const fcCards = [
   {cat:"Amines",q:"Amine classification?",a:"1° (RNH2), 2° (R2NH), 3° (R3N), quaternary ammonium (R4N+). Based on number of C groups on N."},
   {cat:"Amines",q:"Basicity order of amines?",a:"R2NH > RNH2 > R3N ≈ NH3 > ArNH2 >> RCONH2. Arylamines are weak bases (lone pair delocalizes into ring). Amides are not basic."},
   {cat:"Amines",q:"Why use reductive amination over direct alkylation?",a:"Direct alkylation (RX + amine) over-alkylates. Reductive amination (carbonyl + amine + NaBH3CN) goes through an imine and gives controlled mono-product."},
-  {cat:"Amines",q:"Gabriel synthesis?",a:"Phthalimide + RX → N-alkylphthalimide → hydrazinolysis (N2H4) releases pure 1° amine. Avoids over-alkylation."},
+  {cat:"Amines",q:"Gabriel synthesis?",a:"Phthalimide + RX <span aria-hidden="true">→</span> N-alkylphthalimide <span aria-hidden="true">→</span> hydrazinolysis (N2H4) releases pure 1° amine. Avoids over-alkylation."},
   {cat:"Amines",q:"What can diazonium salts be converted to?",a:"ArOH, ArF (Schiemann), ArCl/ArBr/ArCN (Sandmeyer), ArI, ArH, or azo dyes. Incredibly versatile synthetic intermediates."},
-  {cat:"Amines",q:"Hofmann elimination product?",a:"Less substituted alkene (anti-Zaitsev). Excess MeI → quaternary salt → Ag2O → E2 elimination favors less hindered product."},
+  {cat:"Amines",q:"Hofmann elimination product?",a:"Less substituted alkene (anti-Zaitsev). Excess MeI <span aria-hidden="true">→</span> quaternary salt <span aria-hidden="true">→</span> Ag2O <span aria-hidden="true">→</span> E2 elimination favors less hindered product."},
   {cat:"Spectroscopy",q:"Broad O-H stretch in IR?",a:"3200-3600 cm⁻¹. Alcohol O-H is broad. Carboxylic acid O-H is very broad (2500-3300 cm⁻¹) and overlaps C-H region."},
   {cat:"Spectroscopy",q:"Carbonyl IR position tells you what?",a:"The type of derivative. Acid chloride ~1800, anhydride two peaks ~1800/1750, ester ~1735-1750, ketone ~1705-1720, amide ~1630-1690."},
   {cat:"Spectroscopy",q:"NMR: what do chemical shift, integration, and splitting tell you?",a:"Shift: electronic environment. Integration: relative number of H's. Splitting (n+1 rule): number of neighboring H's."},
@@ -675,18 +706,18 @@ const fcCards = [
   {cat:"Spectroscopy",q:"13C NMR: carbonyl carbon range?",a:"170-220 ppm. Aromatics: 110-160 ppm. sp3 carbons: 10-50 ppm. No splitting in broadband-decoupled spectra."},
   {cat:"Spectroscopy",q:"Nitrogen rule in mass spec?",a:"Odd molecular ion (M+) = odd number of nitrogen atoms. Even M+ = zero or even number of nitrogens."},
   {cat:"Spectroscopy",q:"Common MS fragmentation losses?",a:"15 (CH3), 18 (H2O), 28 (CO), 29 (CHO), 31 (OCH3), 45 (OEt). Base peak = most abundant fragment."},
-  {cat:"Redox",q:"PCC vs. Jones reagent?",a:"PCC: mild, stops at aldehyde (1° alcohol → aldehyde). Jones: strong, goes to carboxylic acid (1° alcohol → RCOOH)."},
-  {cat:"Redox",q:"NaBH4 vs. LiAlH4?",a:"NaBH4: mild, reduces only aldehydes/ketones. LiAlH4: strong, reduces esters → alcohols, acids → alcohols, amides → amines, and everything NaBH4 does."},
-  {cat:"Redox",q:"Lindlar's vs. Na/NH3 for alkynes?",a:"Lindlar's (poisoned Pd + H2): syn addition → cis-alkene. Na/NH3 (dissolving metal): anti addition → trans-alkene."},
-  {cat:"Redox",q:"Clemmensen vs. Wolff-Kishner?",a:"Both: ketone → CH2. Clemmensen: acid (Zn-Hg, HCl). Wolff-Kishner: base (N2H4, KOH, heat). Choose based on substrate acid/base sensitivity."},
-  {cat:"Redox",q:"DIBAL-H at -78°C?",a:"Partially reduces ester → aldehyde. At warmer temps or excess gives alcohol. Temperature control is critical."},
-  {cat:"Redox",q:"Ozonolysis: DMS vs. H2O2 workup?",a:"DMS (reductive): alkene → aldehydes/ketones. H2O2 (oxidative): alkene → carboxylic acids."},
-  {cat:"Redox",q:"mCPBA reaction?",a:"Converts alkene → epoxide. Concerted, stereospecific (syn addition of oxygen across the double bond)."},
+  {cat:"Redox",q:"PCC vs. Jones reagent?",a:"PCC: mild, stops at aldehyde (1° alcohol <span aria-hidden="true">→</span> aldehyde). Jones: strong, goes to carboxylic acid (1° alcohol <span aria-hidden="true">→</span> RCOOH)."},
+  {cat:"Redox",q:"NaBH4 vs. LiAlH4?",a:"NaBH4: mild, reduces only aldehydes/ketones. LiAlH4: strong, reduces esters <span aria-hidden="true">→</span> alcohols, acids <span aria-hidden="true">→</span> alcohols, amides <span aria-hidden="true">→</span> amines, and everything NaBH4 does."},
+  {cat:"Redox",q:"Lindlar's vs. Na/NH3 for alkynes?",a:"Lindlar's (poisoned Pd + H2): syn addition <span aria-hidden="true">→</span> cis-alkene. Na/NH3 (dissolving metal): anti addition <span aria-hidden="true">→</span> trans-alkene."},
+  {cat:"Redox",q:"Clemmensen vs. Wolff-Kishner?",a:"Both: ketone <span aria-hidden="true">→</span> CH2. Clemmensen: acid (Zn-Hg, HCl). Wolff-Kishner: base (N2H4, KOH, heat). Choose based on substrate acid/base sensitivity."},
+  {cat:"Redox",q:"DIBAL-H at -78°C?",a:"Partially reduces ester <span aria-hidden="true">→</span> aldehyde. At warmer temps or excess gives alcohol. Temperature control is critical."},
+  {cat:"Redox",q:"Ozonolysis: DMS vs. H2O2 workup?",a:"DMS (reductive): alkene <span aria-hidden="true">→</span> aldehydes/ketones. H2O2 (oxidative): alkene <span aria-hidden="true">→</span> carboxylic acids."},
+  {cat:"Redox",q:"mCPBA reaction?",a:"Converts alkene <span aria-hidden="true">→</span> epoxide. Concerted, stereospecific (syn addition of oxygen across the double bond)."},
   {cat:"Bio/Polymers",q:"Addition vs. condensation polymers?",a:"Addition (chain-growth): monomers with C=C, radical/ionic mechanism (polyethylene, PVC). Condensation (step-growth): lose H2O each step (nylon, PET)."},
   {cat:"Bio/Polymers",q:"Alpha vs. beta anomer?",a:"Alpha: OH on anomeric carbon is axial (down in glucose). Beta: OH is equatorial (up). They interconvert via mutarotation."},
   {cat:"Bio/Polymers",q:"Amino acid zwitterion?",a:"At physiological pH, amino group is protonated (NH3+) and carboxyl is deprotonated (COO⁻). Net charge zero at pI."},
   {cat:"Bio/Polymers",q:"Why is the peptide bond planar?",a:"Resonance between nitrogen lone pair and C=O gives partial double-bond character to C-N. Restricts rotation, making the bond planar."},
-  {cat:"Bio/Polymers",q:"Saponification of a fat?",a:"Triacylglycerol + 3 NaOH → glycerol + 3 sodium carboxylate salts (soap). Irreversible base hydrolysis of ester bonds."}
+  {cat:"Bio/Polymers",q:"Saponification of a fat?",a:"Triacylglycerol + 3 NaOH <span aria-hidden="true">→</span> glycerol + 3 sodium carboxylate salts (soap). Irreversible base hydrolysis of ester bonds."}
 ];
 
 let fcIdx = 0, fcFiltered = [...fcCards];
@@ -778,7 +809,7 @@ function gradeSA(i) {
   result.innerHTML = `
     <div style="font-weight:600;font-size:1.05rem;color:${color};">${pct}%</div>
     <div class="sa-bar"><div class="sa-bar-fill" style="width:${pct}%;background:${color};"></div></div>
-    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '✓' : '○'} ${t.label}</span>`).join('')}</div>
+    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '<span aria-hidden="true">✓</span>' : '<span aria-hidden="true">○</span>'} ${t.label}</span>`).join('')}</div>
     <details class="sa-model"><summary>Show Model Answer</summary><div class="model-text">${q.model}</div></details>
   `;
 }
@@ -786,7 +817,7 @@ renderSA();
 </script>
 
   <div style="max-width: 800px; margin: 40px auto; padding: 20px 30px; background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 8px; font-size: 14px; line-height: 1.6; color: #555;">
-  <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;">⚠️ Important Notice</div>
+  <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;"><span aria-hidden="true">⚠️</span> Important Notice</div>
   <p style="margin: 0 0 10px 0;">These study resources are provided free of charge for educational purposes only. They are intended as supplemental study aids and should not be used as a substitute for your course textbooks, lecture materials, or the guidance of your instructors.</p>
   <p style="margin: 0 0 10px 0;">While every effort has been made to ensure accuracy, this content may contain errors, omissions, or information that is out of date. Science is constantly evolving, and material that was accurate at the time of writing may no longer reflect current understanding. Always verify important facts, formulas, and concepts against your official course materials.</p>
   <p style="margin: 0 0 10px 0;">No guarantees are made regarding the completeness, accuracy, or reliability of any information presented on these sites. Use at your own discretion. If you spot an error, we appreciate you letting us know so it can be corrected.</p>
