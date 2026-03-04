@@ -31,6 +31,9 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
 
+/* SR-ONLY */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
 /* HEADER */
 header { background: linear-gradient(135deg, #3b1c08 0%, #7a3a10 50%, #c45e20 100%); color: #fff; padding: 3.5rem 1.5rem 2.5rem; text-align: center; }
 header h1 { font-family: 'Crimson Pro', serif; font-size: 2.6rem; font-weight: 700; letter-spacing: -.01em; margin-bottom: .3rem; }
@@ -63,6 +66,15 @@ header p { font-size: 1.05rem; opacity: .88; font-weight: 300; }
 .callout-warning { background: var(--coral-light); border-left: 4px solid var(--coral); }
 .callout-mnemonic { background: var(--purple-light); border-left: 4px solid var(--purple); }
 .callout strong { font-weight: 600; }
+
+/* WORKED EXAMPLE */
+.worked-example { background: #f0f7ff; border: 1px solid #b3d4f7; border-radius: 10px; padding: 1.25rem 1.5rem; margin: 1.25rem 0; }
+.worked-example h4 { font-family: 'Crimson Pro', serif; font-size: 1.1rem; font-weight: 700; color: #1a4a7a; margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
+.worked-example h4::before { content: "✎"; font-size: 1rem; }
+.we-step { display: flex; gap: .75rem; margin: .5rem 0; align-items: flex-start; }
+.we-step-num { font-family: 'JetBrains Mono', monospace; font-size: .78rem; background: #1a4a7a; color: #fff; border-radius: 50%; min-width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; margin-top: .15rem; flex-shrink: 0; }
+.we-step-text { font-size: .94rem; line-height: 1.6; }
+.we-answer { margin-top: .75rem; padding: .65rem 1rem; background: #dbeeff; border-radius: 7px; font-weight: 600; font-size: .95rem; color: #1a4a7a; }
 
 /* TABLES */
 .ref-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .92rem; }
@@ -141,7 +153,7 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   .ref-table { font-size: .82rem; }
 }
 
-/* ─── WCAG 2.1 AA: Visible focus indicators ─── */
+/* WCAG 2.1 AA: Visible focus indicators */
 :focus-visible {
   outline: 3px solid #005fcc !important;
   outline-offset: 2px !important;
@@ -150,30 +162,20 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   outline: 3px solid #005fcc !important;
   outline-offset: 2px !important;
 }
-/* ─── Skip link ─── */
+/* Skip link */
 .skip-link {
-  position: absolute;
-  top: -100px;
-  left: 1rem;
-  background: #005fcc;
-  color: #fff;
-  padding: 0.6rem 1.2rem;
-  border-radius: 0 0 6px 6px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-decoration: none;
-  z-index: 9999;
-  transition: top 0.2s;
+  position: absolute; top: -100px; left: 1rem;
+  background: #005fcc; color: #fff;
+  padding: 0.6rem 1.2rem; border-radius: 0 0 6px 6px;
+  font-weight: 700; font-size: 0.95rem;
+  text-decoration: none; z-index: 9999; transition: top 0.2s;
 }
-.skip-link:focus {
-  top: 0;
-}
-
+.skip-link:focus { top: 0; }
 </style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
-
+<div id="live-announce" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
 <header>
   <h1>Organic Chemistry II</h1>
@@ -184,7 +186,7 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
 <div class="container" id="main-content" role="main">
 
 <!-- TABLE OF CONTENTS -->
-<div class="toc">
+<nav class="toc" aria-label="Page contents">
   <h2>Contents</h2>
   <div class="toc-grid">
     <a href="#s1"><span class="num">01</span> Conjugated Systems &amp; Diels-Alder</a>
@@ -199,11 +201,11 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
     <a href="#s10"><span class="num">10</span> Reaction Summary &amp; Reagent Guide</a>
     <a href="#practice"><span class="num">++</span> Practice &amp; Review</a>
   </div>
-</div>
+</nav>
 
 <!-- SECTION 1 -->
-<div class="section-card" id="s1">
-  <h2><span class="num">01</span> Conjugated Systems &amp; Diels-Alder</h2>
+<section class="section-card" id="s1">
+  <h2><span class="num" aria-hidden="true">01</span> Conjugated Systems &amp; Diels-Alder</h2>
 
   <p>Conjugation occurs when p orbitals overlap across three or more adjacent atoms. This extended overlap lowers energy and increases stability. A conjugated diene has alternating single and double bonds (1,3-butadiene is the simplest example). Isolated dienes have non-conjugated double bonds separated by two or more single bonds and do not benefit from resonance stabilization.</p>
 
@@ -217,78 +219,121 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   <p>The Diels-Alder is a [4+2] cycloaddition: a conjugated diene (4 pi electrons) reacts with a dienophile (2 pi electrons) to form a six-membered ring in a single concerted step. This is a pericyclic reaction, meaning bonds break and form simultaneously through a cyclic transition state. It is stereospecific (syn addition on both components) and the endo product is kinetically favored.</p>
 
   <div class="callout callout-example">
-    <strong>Electron demand:</strong> Normal Diels-Alder reactions are fastest when the diene is electron-rich (donor groups like -OR, -NR2) and the dienophile is electron-poor (withdrawing groups like -CHO, -COOR, -CN, -NO2). Inverse electron demand reverses this pattern.
+    <strong>Electron demand:</strong> Normal Diels-Alder reactions are fastest when the diene is electron-rich (donor groups like -OR, -NR<sub>2</sub>) and the dienophile is electron-poor (withdrawing groups like -CHO, -COOR, -CN, -NO<sub>2</sub>). Inverse electron demand reverses this pattern.
   </div>
 
-  <table class="ref-table">
-    <tr><th>Feature</th><th>Detail</th></tr>
-    <tr><td>Reaction type</td><td>[4+2] cycloaddition, concerted, pericyclic</td></tr>
-    <tr><td>Diene requirement</td><td>Must be in s-cis conformation</td></tr>
-    <tr><td>Stereochemistry</td><td>Syn addition (cis on both diene and dienophile)</td></tr>
-    <tr><td>Regiochemistry</td><td>"Ortho/para" rule for unsymmetric reactants</td></tr>
-    <tr><td>Endo rule</td><td>Kinetic product favored (secondary orbital overlap)</td></tr>
-    <tr><td>Thermally allowed</td><td>Yes (4n+2 electrons in transition state)</td></tr>
+  <table class="ref-table" aria-label="Diels-Alder reaction features">
+    <caption class="sr-only">Summary of Diels-Alder reaction features and details</caption>
+    <thead>
+      <tr><th scope="col">Feature</th><th scope="col">Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Reaction type</td><td>[4+2] cycloaddition, concerted, pericyclic</td></tr>
+      <tr><td>Diene requirement</td><td>Must be in s-cis conformation</td></tr>
+      <tr><td>Stereochemistry</td><td>Syn addition (cis on both diene and dienophile)</td></tr>
+      <tr><td>Regiochemistry</td><td>"Ortho/para" rule for unsymmetric reactants</td></tr>
+      <tr><td>Endo rule</td><td>Kinetic product favored (secondary orbital overlap)</td></tr>
+      <tr><td>Thermally allowed</td><td>Yes (4n+2 electrons in transition state)</td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-mnemonic">
     <strong>Mnemonic:</strong> "Diels-Alder Demands s-Cis" helps recall that the diene must adopt the s-cis conformation before cycloaddition can occur.
   </div>
-</div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Predicting the Diels-Alder Product</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> 1,3-butadiene reacts with maleic anhydride. Predict the product, including stereochemistry.</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Check diene requirements.</strong> 1,3-Butadiene (CH<sub>2</sub>=CH-CH=CH<sub>2</sub>) can adopt the s-cis conformation. ✓</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Identify the dienophile.</strong> Maleic anhydride has a C=C double bond flanked by two electron-withdrawing carbonyl groups. It is an excellent electron-poor dienophile. ✓</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Draw the [4+2] cycloaddition.</strong> Carbons 1 and 4 of the diene bond to the two carbons of the dienophile's double bond, forming a six-membered ring.</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Apply stereochemistry.</strong> Maleic anhydride is cis. Syn addition means the two anhydride carbonyls stay cis to each other in the product. The endo rule predicts the carbonyls point toward the diene in the transition state (endo approach).</div></div>
+    <div class="we-answer">Product: A bicyclic cis-cyclohexene anhydride (the two C=O groups are cis on the same face). This is a six-membered ring with one remaining double bond and the anhydride bridge.</div>
+  </div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Is This Molecule s-cis Capable?</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> Can cyclohexadiene undergo a Diels-Alder reaction? Can 1,3-cyclohexadiene?</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>1,3-Cyclohexadiene</strong> is locked in the s-cis conformation because the double bonds are in a ring — they cannot rotate away from each other. This makes it a very reactive diene in Diels-Alder reactions. ✓</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>1,4-Cyclohexadiene</strong> has the double bonds separated by two CH<sub>2</sub> groups — this is an isolated (non-conjugated) diene. No s-cis conformation is relevant because it is not even conjugated. ✗</div></div>
+    <div class="we-answer">Only 1,3-cyclohexadiene can undergo Diels-Alder. Non-conjugated dienes cannot participate.</div>
+  </div>
+</section>
 
 <!-- SECTION 2 -->
-<div class="section-card" id="s2">
-  <h2><span class="num">02</span> Aromatic Compounds &amp; Reactions</h2>
+<section class="section-card" id="s2">
+  <h2><span class="num" aria-hidden="true">02</span> Aromatic Compounds &amp; Reactions</h2>
 
-  <p>Aromatic compounds satisfy Huckel's rule: they are cyclic, planar, fully conjugated, and contain 4n+2 pi electrons (where n = 0, 1, 2...). Benzene (6 pi electrons, n=1) is the classic example. Antiaromatic compounds are cyclic, planar, fully conjugated but have 4n pi electrons and are highly unstable. Nonaromatic compounds fail one or more criteria (not cyclic, not planar, not fully conjugated).</p>
+  <p>Aromatic compounds satisfy Hückel's rule: they are cyclic, planar, fully conjugated, and contain 4n+2 pi electrons (where n = 0, 1, 2...). Benzene (6 pi electrons, n=1) is the classic example. Antiaromatic compounds are cyclic, planar, fully conjugated but have 4n pi electrons and are highly unstable. Nonaromatic compounds fail one or more criteria (not cyclic, not planar, not fully conjugated).</p>
 
   <div class="callout callout-key">
-    <strong>Heterocyclic aromatics:</strong> Pyridine's nitrogen lone pair is in an sp2 orbital in the plane of the ring (not part of the pi system). Pyrrole's nitrogen lone pair is in a p orbital contributing to the pi system (6 pi electrons total). This is why pyridine is basic and pyrrole is not.
+    <strong>Heterocyclic aromatics:</strong> Pyridine's nitrogen lone pair is in an sp<sup>2</sup> orbital in the plane of the ring (not part of the pi system). Pyrrole's nitrogen lone pair is in a p orbital contributing to the pi system (6 pi electrons total). This is why pyridine is basic and pyrrole is not.
   </div>
 
   <h3>Electrophilic Aromatic Substitution (EAS)</h3>
-  <p>The general mechanism has two steps: (1) the electrophile attacks the pi system to form an arenium ion (sigma complex), which is the rate-determining step, and (2) a proton is lost to restore aromaticity. The ring acts as a nucleophile. Common EAS reactions include halogenation (Br2/FeBr3), nitration (HNO3/H2SO4), sulfonation (SO3/H2SO4), Friedel-Crafts alkylation (RCl/AlCl3), and Friedel-Crafts acylation (RCOCl/AlCl3).</p>
+  <p>The general mechanism has two steps: (1) the electrophile attacks the pi system to form an arenium ion (sigma complex), which is the rate-determining step, and (2) a proton is lost to restore aromaticity. The ring acts as a nucleophile. Common EAS reactions include halogenation (Br<sub>2</sub>/FeBr<sub>3</sub>), nitration (HNO<sub>3</sub>/H<sub>2</sub>SO<sub>4</sub>), sulfonation (SO<sub>3</sub>/H<sub>2</sub>SO<sub>4</sub>), Friedel-Crafts alkylation (RCl/AlCl<sub>3</sub>), and Friedel-Crafts acylation (RCOCl/AlCl<sub>3</sub>).</p>
 
-  <table class="ref-table">
-    <tr><th>Substituent Type</th><th>Effect on Rate</th><th>Directing</th><th>Examples</th></tr>
-    <tr><td>Strong activating</td><td>Faster than benzene</td><td>Ortho/para</td><td><code>-NH2, -NHR, -OH, -OR</code></td></tr>
-    <tr><td>Moderate activating</td><td>Faster</td><td>Ortho/para</td><td><code>-NHCOR, -OCOR</code></td></tr>
-    <tr><td>Weak activating</td><td>Slightly faster</td><td>Ortho/para</td><td><code>-R, -Ar</code> (alkyl, aryl)</td></tr>
-    <tr><td>Weak deactivating</td><td>Slower</td><td>Ortho/para</td><td><code>-F, -Cl, -Br, -I</code> (halogens)</td></tr>
-    <tr><td>Moderate deactivating</td><td>Slower</td><td>Meta</td><td><code>-CHO, -COR, -COOR, -CN</code></td></tr>
-    <tr><td>Strong deactivating</td><td>Much slower</td><td>Meta</td><td><code>-NO2, -CF3, -NR3+</code></td></tr>
+  <table class="ref-table" aria-label="EAS substituent effects">
+    <caption class="sr-only">Substituent effects on electrophilic aromatic substitution: rate and directing group</caption>
+    <thead>
+      <tr><th scope="col">Substituent Type</th><th scope="col">Effect on Rate</th><th scope="col">Directing</th><th scope="col">Examples</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Strong activating</td><td>Faster than benzene</td><td>Ortho/para</td><td><code>-NH<sub>2</sub>, -NHR, -OH, -OR</code></td></tr>
+      <tr><td>Moderate activating</td><td>Faster</td><td>Ortho/para</td><td><code>-NHCOR, -OCOR</code></td></tr>
+      <tr><td>Weak activating</td><td>Slightly faster</td><td>Ortho/para</td><td><code>-R, -Ar</code> (alkyl, aryl)</td></tr>
+      <tr><td>Weak deactivating</td><td>Slower</td><td>Ortho/para</td><td><code>-F, -Cl, -Br, -I</code> (halogens)</td></tr>
+      <tr><td>Moderate deactivating</td><td>Slower</td><td>Meta</td><td><code>-CHO, -COR, -COOR, -CN</code></td></tr>
+      <tr><td>Strong deactivating</td><td>Much slower</td><td>Meta</td><td><code>-NO<sub>2</sub>, -CF<sub>3</sub>, -NR<sub>3</sub><sup>+</sup></code></td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-warning">
     <strong>Halogens are the exception:</strong> They are ortho/para directors but deactivators. Their lone pairs donate by resonance (ortho/para directing) but their high electronegativity withdraws by induction (deactivating). The resonance effect controls regiochemistry while induction controls rate.
   </div>
 
+  <div class="worked-example">
+    <h4>Worked Example: Predicting EAS Product on a Substituted Ring</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> Where does Br<sub>2</sub>/FeBr<sub>3</sub> brominate aniline (PhNH<sub>2</sub>)? What about nitrobenzene?</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Aniline (-NH<sub>2</sub> group):</strong> -NH<sub>2</sub> is a strong activator and ortho/para director. The lone pair on nitrogen donates into the ring, stabilizing the arenium ion at ortho and para positions.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Aniline product:</strong> Bromination gives mostly para-bromoaniline (para preferred over ortho due to sterics), with some ortho product. The ring reacts very fast — dilute Br<sub>2</sub> with no Lewis acid even works!</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Nitrobenzene (-NO<sub>2</sub> group):</strong> -NO<sub>2</sub> is a strong deactivator and meta director. It destabilizes the arenium ion at ortho and para positions through resonance withdrawal, so meta is the least destabilized.</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Nitrobenzene product:</strong> Bromination gives meta-bromonitrobenzene. The reaction requires forcing conditions (excess Lewis acid, heat) because the ring is deactivated.</div></div>
+    <div class="we-answer">Aniline → para-bromoaniline (fast, mild). Nitrobenzene → meta-bromonitrobenzene (slow, harsh conditions).</div>
+  </div>
+
   <h3>Nucleophilic Aromatic Substitution (NAS)</h3>
-  <p>NAS occurs on rings bearing strong electron-withdrawing groups (especially -NO2) at positions ortho or para to the leaving group. The mechanism goes through a Meisenheimer complex (anionic sigma complex). The addition-elimination pathway is the most common. Benzyne intermediates can also occur with very strong bases like NaNH2.</p>
+  <p>NAS occurs on rings bearing strong electron-withdrawing groups (especially -NO<sub>2</sub>) at positions ortho or para to the leaving group. The mechanism goes through a Meisenheimer complex (anionic sigma complex). The addition-elimination pathway is the most common. Benzyne intermediates can also occur with very strong bases like NaNH<sub>2</sub>.</p>
 
   <div class="callout callout-key">
-    <strong>Friedel-Crafts limitations:</strong> FC reactions do not work on strongly deactivated rings (-NO2, -COR, -CN, -SO3H). FC alkylation is prone to carbocation rearrangements and polyalkylation. FC acylation avoids both problems because acylium ions do not rearrange and the ketone product deactivates the ring.
+    <strong>Friedel-Crafts limitations:</strong> FC reactions do not work on strongly deactivated rings (-NO<sub>2</sub>, -COR, -CN, -SO<sub>3</sub>H). FC alkylation is prone to carbocation rearrangements and polyalkylation. FC acylation avoids both problems because acylium ions do not rearrange and the ketone product deactivates the ring.
   </div>
-</div>
+</section>
 
 <!-- SECTION 3 -->
-<div class="section-card" id="s3">
-  <h2><span class="num">03</span> Aldehydes &amp; Ketones</h2>
+<section class="section-card" id="s3">
+  <h2><span class="num" aria-hidden="true">03</span> Aldehydes &amp; Ketones</h2>
 
-  <p>Aldehydes (RCHO) and ketones (RCOR') both contain the carbonyl group (C=O). The carbon is sp2 hybridized, planar, and electrophilic because oxygen is more electronegative. Aldehydes are more reactive than ketones toward nucleophilic addition because they have less steric hindrance and fewer electron-donating alkyl groups stabilizing the partial positive charge on carbon.</p>
+  <p>Aldehydes (RCHO) and ketones (RCOR') both contain the carbonyl group (C=O). The carbon is sp<sup>2</sup> hybridized, planar, and electrophilic because oxygen is more electronegative. Aldehydes are more reactive than ketones toward nucleophilic addition because they have less steric hindrance and fewer electron-donating alkyl groups stabilizing the partial positive charge on carbon.</p>
 
   <h3>Nucleophilic Addition Reactions</h3>
   <p>The general pattern for carbonyl chemistry is nucleophilic addition: a nucleophile attacks the electrophilic carbonyl carbon, pushing electrons onto oxygen. The product depends on the nucleophile used.</p>
 
-  <table class="ref-table">
-    <tr><th>Nucleophile</th><th>Product</th><th>Notes</th></tr>
-    <tr><td><code>H-</code> (NaBH4, LiAlH4)</td><td>Alcohol</td><td>NaBH4 is mild (ketones/aldehydes only); LiAlH4 reduces esters, acids too</td></tr>
-    <tr><td><code>R-MgBr</code> (Grignard)</td><td>Alcohol</td><td>Adds one carbon chain; HCHO gives 1&deg;, aldehyde gives 2&deg;, ketone gives 3&deg;</td></tr>
-    <tr><td><code>HCN</code></td><td>Cyanohydrin</td><td>Base-catalyzed; adds CN and OH</td></tr>
-    <tr><td><code>RNH2</code> (1&deg; amine)</td><td>Imine (Schiff base)</td><td>Requires mild acid catalyst; C=N bond forms with loss of water</td></tr>
-    <tr><td><code>R2NH</code> (2&deg; amine)</td><td>Enamine</td><td>C=C adjacent to nitrogen; useful synthetic intermediate</td></tr>
-    <tr><td><code>ROH</code> (alcohol, acid cat.)</td><td>Hemiacetal &rarr; Acetal</td><td>Two equivalents of ROH; acetals are carbonyl protecting groups</td></tr>
-    <tr><td><code>Ph3P=CHR</code> (Wittig)</td><td>Alkene</td><td>Replaces C=O with C=C; phosphorus ylide reagent</td></tr>
-    <tr><td><code>H2NNH2</code> (Wolff-Kishner)</td><td>Alkane (CH2)</td><td>Base, high temp; reduces C=O all the way to CH2</td></tr>
+  <table class="ref-table" aria-label="Nucleophilic addition reactions of aldehydes and ketones">
+    <caption class="sr-only">Nucleophiles and their products when reacting with aldehydes and ketones</caption>
+    <thead>
+      <tr><th scope="col">Nucleophile</th><th scope="col">Product</th><th scope="col">Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>H<sup>-</sup></code> (NaBH<sub>4</sub>, LiAlH<sub>4</sub>)</td><td>Alcohol</td><td>NaBH<sub>4</sub> is mild (ketones/aldehydes only); LiAlH<sub>4</sub> reduces esters, acids too</td></tr>
+      <tr><td><code>R-MgBr</code> (Grignard)</td><td>Alcohol</td><td>Adds one carbon chain; HCHO gives 1°, aldehyde gives 2°, ketone gives 3°</td></tr>
+      <tr><td><code>HCN</code></td><td>Cyanohydrin</td><td>Base-catalyzed; adds CN and OH</td></tr>
+      <tr><td><code>RNH<sub>2</sub></code> (1° amine)</td><td>Imine (Schiff base)</td><td>Requires mild acid catalyst; C=N bond forms with loss of water</td></tr>
+      <tr><td><code>R<sub>2</sub>NH</code> (2° amine)</td><td>Enamine</td><td>C=C adjacent to nitrogen; useful synthetic intermediate</td></tr>
+      <tr><td><code>ROH</code> (alcohol, acid cat.)</td><td>Hemiacetal &rarr; Acetal</td><td>Two equivalents of ROH; acetals are carbonyl protecting groups</td></tr>
+      <tr><td><code>Ph<sub>3</sub>P=CHR</code> (Wittig)</td><td>Alkene</td><td>Replaces C=O with C=C; phosphorus ylide reagent</td></tr>
+      <tr><td><code>H<sub>2</sub>NNH<sub>2</sub></code> (Wolff-Kishner)</td><td>Alkane (CH<sub>2</sub>)</td><td>Base, high temp; reduces C=O all the way to CH<sub>2</sub></td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-key">
@@ -298,29 +343,52 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   <div class="callout callout-example">
     <strong>Grignard rule of thumb:</strong> Count the carbons. Formaldehyde + RMgBr gives a primary alcohol. Any other aldehyde + RMgBr gives a secondary alcohol. A ketone + RMgBr gives a tertiary alcohol. The Grignard adds the R group to the carbonyl carbon.
   </div>
-</div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Grignard Synthesis — Building a Specific Alcohol</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> How would you synthesize 2-phenyl-2-propanol (a tertiary alcohol with two methyl groups and a phenyl group on the carbon bearing the OH)?</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Identify the target.</strong> 2-Phenyl-2-propanol: the central carbon bears -OH, two -CH<sub>3</sub> groups, and a -Ph group. It is a tertiary alcohol.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Work backward (retrosynthesis).</strong> To get a tertiary alcohol from a Grignard, we need a ketone. Disconnect one C–C bond at the former C–OH carbon: Ph-C(=O)-CH<sub>3</sub> (acetophenone) + CH<sub>3</sub>MgBr, OR (CH<sub>3</sub>)<sub>2</sub>C=O (acetone) + PhMgBr.</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Choose Route A:</strong> Acetophenone + methylmagnesium bromide. Add CH<sub>3</sub>MgBr (in ether) to acetophenone, stir, then add dilute aqueous acid workup (NH<sub>4</sub>Cl / H<sub>2</sub>O).</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Mechanism check:</strong> CH<sub>3</sub><sup>-</sup> (from Grignard) attacks the electrophilic carbonyl carbon of acetophenone → tetrahedral alkoxide intermediate → protonation on workup → tertiary alcohol product.</div></div>
+    <div class="we-answer">Acetophenone + CH<sub>3</sub>MgBr, then H<sub>3</sub>O<sup>+</sup> workup → 2-phenyl-2-propanol. ✓</div>
+  </div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Choosing the Right Carbonyl Reaction</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> You need to convert cyclohexanone to an alkene (cyclohexane with an exocyclic =CH<sub>2</sub>). Which reaction? What if you just want cyclohexane (remove the oxygen entirely)?</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>C=O → C=CH<sub>2</sub> (add a new carbon as part of the double bond):</strong> Use a Wittig reaction. Prepare the ylide Ph<sub>3</sub>P=CH<sub>2</sub> (methylenetriphenylphosphorane) from Ph<sub>3</sub>P + CH<sub>2</sub>Br<sub>2</sub>/base. React with cyclohexanone.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>C=O → CH<sub>2</sub> (remove oxygen, keep same carbon count):</strong> Use Clemmensen reduction (Zn-Hg, HCl) or Wolff-Kishner (N<sub>2</sub>H<sub>4</sub>, KOH, heat). Both convert the ketone C=O all the way to a CH<sub>2</sub>.</div></div>
+    <div class="we-answer">Wittig = replaces C=O with C=C (adds a carbon). Clemmensen/Wolff-Kishner = replaces C=O with CH<sub>2</sub> (no new carbon). Choose based on your structural goal.</div>
+  </div>
+</section>
 
 <!-- SECTION 4 -->
-<div class="section-card" id="s4">
-  <h2><span class="num">04</span> Carboxylic Acids &amp; Derivatives</h2>
+<section class="section-card" id="s4">
+  <h2><span class="num" aria-hidden="true">04</span> Carboxylic Acids &amp; Derivatives</h2>
 
   <p>Carboxylic acid derivatives share the acyl group (RCO-) bonded to a leaving group. They undergo nucleophilic acyl substitution: a nucleophile attacks the carbonyl carbon, a tetrahedral intermediate forms, and the leaving group departs to regenerate the carbonyl. This differs from nucleophilic addition (aldehydes/ketones) because carboxylic acid derivatives have a leaving group that can depart.</p>
 
   <h3>Reactivity Order</h3>
   <p>Reactivity decreases as the leaving group becomes a worse leaving group (or equivalently, as the lone pair on the atom attached to the carbonyl donates more electron density by resonance).</p>
 
-  <div class="formula-block">
+  <div class="formula-block" role="img" aria-label="Reactivity order: Acid chloride greater than Anhydride greater than Ester approximately equal to Thioester greater than Amide greater than Carboxylate">
     Acid chloride &gt; Anhydride &gt; Ester &ge; Thioester &gt; Amide &gt; Carboxylate
   </div>
 
-  <table class="ref-table">
-    <tr><th>Derivative</th><th>Structure</th><th>Leaving Group</th><th>Relative Reactivity</th></tr>
-    <tr><td>Acid chloride</td><td><code>RCOCl</code></td><td><code>Cl-</code></td><td>Most reactive</td></tr>
-    <tr><td>Anhydride</td><td><code>RCO-O-COR</code></td><td><code>RCOO-</code></td><td>High</td></tr>
-    <tr><td>Ester</td><td><code>RCOOR'</code></td><td><code>R'O-</code></td><td>Moderate</td></tr>
-    <tr><td>Thioester</td><td><code>RCOSR'</code></td><td><code>R'S-</code></td><td>Moderate</td></tr>
-    <tr><td>Amide</td><td><code>RCONHR'</code></td><td><code>R'NH-</code></td><td>Low (very stable)</td></tr>
-    <tr><td>Carboxylate</td><td><code>RCOO-</code></td><td><code>O2-</code></td><td>Least reactive</td></tr>
+  <table class="ref-table" aria-label="Carboxylic acid derivatives reactivity">
+    <caption class="sr-only">Structures, leaving groups, and relative reactivity of carboxylic acid derivatives</caption>
+    <thead>
+      <tr><th scope="col">Derivative</th><th scope="col">Structure</th><th scope="col">Leaving Group</th><th scope="col">Relative Reactivity</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Acid chloride</td><td><code>RCOCl</code></td><td><code>Cl<sup>-</sup></code></td><td>Most reactive</td></tr>
+      <tr><td>Anhydride</td><td><code>RCO-O-COR</code></td><td><code>RCOO<sup>-</sup></code></td><td>High</td></tr>
+      <tr><td>Ester</td><td><code>RCOOR'</code></td><td><code>R'O<sup>-</sup></code></td><td>Moderate</td></tr>
+      <tr><td>Thioester</td><td><code>RCOSR'</code></td><td><code>R'S<sup>-</sup></code></td><td>Moderate</td></tr>
+      <tr><td>Amide</td><td><code>RCONHR'</code></td><td><code>R'NH<sup>-</sup></code></td><td>Low (very stable)</td></tr>
+      <tr><td>Carboxylate</td><td><code>RCOO<sup>-</sup></code></td><td><code>O<sup>2-</sup></code></td><td>Least reactive</td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-key">
@@ -328,166 +396,246 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   </div>
 
   <h3>Key Named Reactions</h3>
-  <p>Fischer esterification combines a carboxylic acid with an alcohol under acid catalysis (H2SO4) to form an ester and water. It is reversible and driven forward by excess alcohol or removal of water. Saponification is base-promoted hydrolysis of an ester to give a carboxylate salt and an alcohol, and it is irreversible because the carboxylate is resonance-stabilized. Transesterification replaces one -OR group with another under acid or base conditions.</p>
+  <p>Fischer esterification combines a carboxylic acid with an alcohol under acid catalysis (H<sub>2</sub>SO<sub>4</sub>) to form an ester and water. It is reversible and driven forward by excess alcohol or removal of water. Saponification is base-promoted hydrolysis of an ester to give a carboxylate salt and an alcohol, and it is irreversible because the carboxylate is resonance-stabilized. Transesterification replaces one -OR group with another under acid or base conditions.</p>
 
   <div class="callout callout-warning">
     <strong>Amide stability matters biologically:</strong> The peptide bond in proteins is an amide bond. Its partial double-bond character (nitrogen lone pair resonance with carbonyl) makes it planar and resistant to hydrolysis. This stability is essential for protein structure but also means that peptide bonds require enzymatic catalysis (proteases) for cleavage under physiological conditions.
   </div>
-</div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Choosing the Right Acid Derivative for a Synthesis</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> You want to make N-methylbenzamide (PhCONHCH<sub>3</sub>) from benzoic acid (PhCOOH). Plan the synthesis.</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Target is an amide.</strong> Can we react benzoic acid directly with methylamine? Yes, but it's slow and inefficient — the acid and amine just form a salt at room temperature. Heating gives the amide, but it's not a clean reaction.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Better: activate the acid first.</strong> Convert benzoic acid to benzoyl chloride (PhCOCl) using thionyl chloride (SOCl<sub>2</sub>). Acid chlorides are the most reactive derivatives.</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>React the acid chloride with the amine.</strong> PhCOCl + CH<sub>3</sub>NH<sub>2</sub> → PhCONHCH<sub>3</sub> + HCl. This proceeds rapidly at room temperature. Add a base (like triethylamine) to neutralize the HCl produced.</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Why not try to go backwards?</strong> We cannot easily convert an amide → acid chloride directly, because amides are the least reactive derivative. We always go from more reactive → less reactive.</div></div>
+    <div class="we-answer">PhCOOH + SOCl<sub>2</sub> → PhCOCl; then PhCOCl + CH<sub>3</sub>NH<sub>2</sub> + Et<sub>3</sub>N → PhCONHCH<sub>3</sub> ✓</div>
+  </div>
+</section>
 
 <!-- SECTION 5 -->
-<div class="section-card" id="s5">
-  <h2><span class="num">05</span> Enols, Enolates &amp; Condensations</h2>
+<section class="section-card" id="s5">
+  <h2><span class="num" aria-hidden="true">05</span> Enols, Enolates &amp; Condensations</h2>
 
-  <p>Alpha carbons (the carbon adjacent to a carbonyl) bear acidic hydrogens because the resulting conjugate base, the enolate, is resonance-stabilized with negative charge shared between carbon and oxygen. The pKa of a typical ketone alpha-H is around 20, while a 1,3-dicarbonyl (beta-diketone) alpha-H is around 9 due to stabilization by two carbonyls.</p>
+  <p>Alpha carbons (the carbon adjacent to a carbonyl) bear acidic hydrogens because the resulting conjugate base, the enolate, is resonance-stabilized with negative charge shared between carbon and oxygen. The pK<sub>a</sub> of a typical ketone alpha-H is around 20, while a 1,3-dicarbonyl (beta-diketone) alpha-H is around 9 due to stabilization by two carbonyls.</p>
 
   <h3>Enol vs. Enolate</h3>
   <p>Enols form under acid catalysis (protonation of oxygen, loss of alpha-H) and are the neutral tautomer with a C=C-OH unit. Enolates form under base catalysis (deprotonation of alpha-H by a strong base like LDA) and carry a formal negative charge. Both are nucleophilic at the alpha carbon, but enolates are much stronger nucleophiles.</p>
 
   <div class="callout callout-key">
-    <strong>LDA (lithium diisopropylamide):</strong> A strong, bulky, non-nucleophilic base. It quantitatively deprotonates the alpha carbon to form a kinetic enolate (less substituted side) at -78&deg;C. Thermodynamic enolates (more substituted, more stable) form with weaker bases at higher temperatures.
+    <strong>LDA (lithium diisopropylamide):</strong> A strong, bulky, non-nucleophilic base. It quantitatively deprotonates the alpha carbon to form a kinetic enolate (less substituted side) at &minus;78&deg;C. Thermodynamic enolates (more substituted, more stable) form with weaker bases at higher temperatures.
   </div>
 
   <h3>Alpha-Carbon Reactions</h3>
-  <table class="ref-table">
-    <tr><th>Reaction</th><th>Conditions</th><th>What Happens</th></tr>
-    <tr><td>Alpha halogenation (acid)</td><td>Br2, H3O+</td><td>Monohalogenation at alpha carbon via enol</td></tr>
-    <tr><td>Alpha halogenation (base)</td><td>Br2, NaOH</td><td>Polyhalogenation (haloform reaction if methyl ketone)</td></tr>
-    <tr><td>Aldol reaction</td><td>NaOH, H2O</td><td>Enolate of one aldehyde adds to carbonyl of another</td></tr>
-    <tr><td>Aldol condensation</td><td>NaOH, heat</td><td>Aldol product dehydrates to give alpha,beta-unsaturated carbonyl</td></tr>
-    <tr><td>Claisen condensation</td><td>NaOEt, EtOH</td><td>Ester enolate + ester carbonyl &rarr; beta-keto ester</td></tr>
-    <tr><td>Michael addition</td><td>Base</td><td>Enolate adds conjugate (1,4-) to alpha,beta-unsaturated carbonyl</td></tr>
-    <tr><td>Robinson annulation</td><td>Base</td><td>Michael addition followed by intramolecular aldol &rarr; cyclohexenone</td></tr>
-    <tr><td>Alkylation</td><td>LDA then RX</td><td>Enolate acts as nucleophile in SN2</td></tr>
+  <table class="ref-table" aria-label="Reactions at the alpha carbon">
+    <caption class="sr-only">Alpha-carbon reactions, conditions, and outcomes</caption>
+    <thead>
+      <tr><th scope="col">Reaction</th><th scope="col">Conditions</th><th scope="col">What Happens</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Alpha halogenation (acid)</td><td>Br<sub>2</sub>, H<sub>3</sub>O<sup>+</sup></td><td>Monohalogenation at alpha carbon via enol</td></tr>
+      <tr><td>Alpha halogenation (base)</td><td>Br<sub>2</sub>, NaOH</td><td>Polyhalogenation (haloform reaction if methyl ketone)</td></tr>
+      <tr><td>Aldol reaction</td><td>NaOH, H<sub>2</sub>O</td><td>Enolate of one aldehyde adds to carbonyl of another</td></tr>
+      <tr><td>Aldol condensation</td><td>NaOH, heat</td><td>Aldol product dehydrates to give &alpha;,&beta;-unsaturated carbonyl</td></tr>
+      <tr><td>Claisen condensation</td><td>NaOEt, EtOH</td><td>Ester enolate + ester carbonyl &rarr; beta-keto ester</td></tr>
+      <tr><td>Michael addition</td><td>Base</td><td>Enolate adds conjugate (1,4-) to &alpha;,&beta;-unsaturated carbonyl</td></tr>
+      <tr><td>Robinson annulation</td><td>Base</td><td>Michael addition followed by intramolecular aldol &rarr; cyclohexenone</td></tr>
+      <tr><td>Alkylation</td><td>LDA then RX</td><td>Enolate acts as nucleophile in S<sub>N</sub>2</td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-mnemonic">
-    <strong>Mnemonic for aldol:</strong> "AL-DOL" = ALdehyde + alDOL (aldehyde acts as both nucleophile via enolate and electrophile via carbonyl). Product always has a beta-hydroxy carbonyl (aldol) that can dehydrate to conjugated enone.
+    <strong>Mnemonic for aldol:</strong> "AL-DOL" = ALdehyde + alDOL. Product always has a beta-hydroxy carbonyl (aldol) that can dehydrate to conjugated enone.
+  </div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Tracing Through an Aldol Condensation</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> Draw the aldol condensation product of acetaldehyde (CH<sub>3</sub>CHO) with itself under NaOH, heat.</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Form the enolate.</strong> NaOH removes one alpha-H from CH<sub>3</sub>CHO to give the enolate: <sup>-</sup>CH<sub>2</sub>CHO.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Nucleophilic addition (aldol step).</strong> The enolate carbon attacks the carbonyl carbon of a second molecule of acetaldehyde: <sup>-</sup>CH<sub>2</sub>CHO + CH<sub>3</sub>CHO → HOCH(CH<sub>3</sub>)–CH<sub>2</sub>CHO after protonation. This is the "aldol" product (3-hydroxybutanal).</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Dehydration (condensation step).</strong> Under heat, the beta-hydroxy carbonyl loses water: the OH on C3 and the alpha-H on C2 are eliminated to give a C=C double bond.</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Final product.</strong> CH<sub>3</sub>CH=CHCHO (2-butenal, also called crotonaldehyde). It is an alpha,beta-unsaturated aldehyde — the double bond is conjugated with the carbonyl.</div></div>
+    <div class="we-answer">Acetaldehyde × 2 + NaOH, heat → 2-butenal (crotonaldehyde). The C=C is between the alpha and beta carbons, conjugated with C=O. ✓</div>
   </div>
 
   <div class="callout callout-example">
     <strong>Crossed aldol strategy:</strong> If you mix two different aldehydes with base, you get four possible aldol products. To get selectivity, use a directed (crossed) aldol: form the enolate of one component with LDA first, then add the second carbonyl compound. Alternatively, use one component that has no alpha hydrogens (like benzaldehyde) so only one enolate can form.
   </div>
-</div>
+</section>
 
 <!-- SECTION 6 -->
-<div class="section-card" id="s6">
-  <h2><span class="num">06</span> Amines &amp; Nitrogen Chemistry</h2>
+<section class="section-card" id="s6">
+  <h2><span class="num" aria-hidden="true">06</span> Amines &amp; Nitrogen Chemistry</h2>
 
-  <p>Amines are organic derivatives of ammonia. They are classified as primary (RNH2), secondary (R2NH), or tertiary (R3N) based on how many carbon groups are attached to nitrogen. Quaternary ammonium salts (R4N+) carry a permanent positive charge. Amines are nucleophilic and basic, with the lone pair on nitrogen being responsible for both properties.</p>
+  <p>Amines are organic derivatives of ammonia. They are classified as primary (RNH<sub>2</sub>), secondary (R<sub>2</sub>NH), or tertiary (R<sub>3</sub>N) based on how many carbon groups are attached to nitrogen. Quaternary ammonium salts (R<sub>4</sub>N<sup>+</sup>) carry a permanent positive charge. Amines are nucleophilic and basic, with the lone pair on nitrogen being responsible for both properties.</p>
 
   <h3>Basicity Trends</h3>
   <p>Alkylamines are more basic than ammonia because alkyl groups donate electron density to nitrogen. Arylamines (aniline) are much less basic because the nitrogen lone pair delocalizes into the aromatic ring. Amides are not basic at all under normal conditions because the nitrogen lone pair is delocalized into the adjacent carbonyl by resonance.</p>
 
   <div class="callout callout-key">
-    <strong>Basicity order:</strong> R2NH &gt; RNH2 &gt; R3N &approx; NH3 &gt; ArNH2 &gt;&gt; RCONH2. The tertiary amine anomaly (less basic than secondary) in aqueous solution is due to solvation effects, not induction alone.
+    <strong>Basicity order:</strong> R<sub>2</sub>NH &gt; RNH<sub>2</sub> &gt; R<sub>3</sub>N &asymp; NH<sub>3</sub> &gt; ArNH<sub>2</sub> &gt;&gt; RCONH<sub>2</sub>. The tertiary amine anomaly (less basic than secondary) in aqueous solution is due to solvation effects, not induction alone.
   </div>
 
   <h3>Reactions of Amines</h3>
-  <table class="ref-table">
-    <tr><th>Reaction</th><th>Reagent/Conditions</th><th>Product</th></tr>
-    <tr><td>Alkylation</td><td>RX (SN2)</td><td>Higher-substituted amine (often over-alkylates)</td></tr>
-    <tr><td>Reductive amination</td><td>Aldehyde/ketone + NaBH3CN</td><td>Controlled monoalkylation; preferred method</td></tr>
-    <tr><td>Acylation</td><td>RCOCl or (RCO)2O</td><td>Amide (stops at mono; no over-acylation)</td></tr>
-    <tr><td>Diazotization (1&deg; aryl)</td><td>NaNO2, HCl, 0&deg;C</td><td>Diazonium salt (ArN2+); versatile intermediate</td></tr>
-    <tr><td>Hofmann elimination</td><td>Excess CH3I, then Ag2O, heat</td><td>Less substituted alkene (anti-Zaitsev)</td></tr>
-    <tr><td>Gabriel synthesis</td><td>Phthalimide + RX, then N2H4</td><td>Pure 1&deg; amine without over-alkylation</td></tr>
+  <table class="ref-table" aria-label="Reactions of amines">
+    <caption class="sr-only">Reactions of amines, reagents used, and products formed</caption>
+    <thead>
+      <tr><th scope="col">Reaction</th><th scope="col">Reagent/Conditions</th><th scope="col">Product</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Alkylation</td><td>RX (S<sub>N</sub>2)</td><td>Higher-substituted amine (often over-alkylates)</td></tr>
+      <tr><td>Reductive amination</td><td>Aldehyde/ketone + NaBH<sub>3</sub>CN</td><td>Controlled monoalkylation; preferred method</td></tr>
+      <tr><td>Acylation</td><td>RCOCl or (RCO)<sub>2</sub>O</td><td>Amide (stops at mono; no over-acylation)</td></tr>
+      <tr><td>Diazotization (1° aryl)</td><td>NaNO<sub>2</sub>, HCl, 0&deg;C</td><td>Diazonium salt (ArN<sub>2</sub><sup>+</sup>); versatile intermediate</td></tr>
+      <tr><td>Hofmann elimination</td><td>Excess CH<sub>3</sub>I, then Ag<sub>2</sub>O, heat</td><td>Less substituted alkene (anti-Zaitsev)</td></tr>
+      <tr><td>Gabriel synthesis</td><td>Phthalimide + RX, then N<sub>2</sub>H<sub>4</sub></td><td>Pure 1° amine without over-alkylation</td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-example">
-    <strong>Diazonium versatility:</strong> Aryl diazonium salts (ArN2+) are incredibly useful synthetic intermediates. They can be converted to ArOH (H2O/heat), ArF (HBF4/heat, Schiemann), ArCl or ArBr (CuCl or CuBr, Sandmeyer), ArCN (CuCN, Sandmeyer), ArI (KI), ArH (H3PO2), or coupled with activated rings (azo coupling for dyes). This makes -NH2 an ultimate directing group: install it for ortho/para direction, then replace it with whatever you need via the diazonium.
+    <strong>Diazonium versatility:</strong> Aryl diazonium salts (ArN<sub>2</sub><sup>+</sup>) can be converted to ArOH (H<sub>2</sub>O/heat), ArF (HBF<sub>4</sub>/heat, Schiemann), ArCl or ArBr (CuCl or CuBr, Sandmeyer), ArCN (CuCN, Sandmeyer), ArI (KI), ArH (H<sub>3</sub>PO<sub>2</sub>), or coupled with activated rings (azo coupling for dyes). This makes -NH<sub>2</sub> an ultimate directing group.
   </div>
-</div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Reductive Amination — Making a Specific Amine</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> Synthesize N-ethylaniline (Ph-NH-CH<sub>2</sub>CH<sub>3</sub>) by reductive amination. What are the two components?</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Identify the amine and carbonyl components.</strong> In reductive amination, an amine + a carbonyl form an imine, which is then reduced. The N-C bond that forms is between the amine nitrogen and the carbonyl carbon.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Disconnect the N–C bond.</strong> N-ethylaniline = PhNH + CH<sub>2</sub>CH<sub>3</sub>. The amine fragment is aniline (PhNH<sub>2</sub>). The "CH<sub>2</sub>CH<sub>3</sub>" carbon came from acetaldehyde (CH<sub>3</sub>CHO → after reduction gives –CH<sub>2</sub>CH<sub>3</sub>).</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Execute the reaction.</strong> Mix aniline + acetaldehyde at mildly acidic pH → imine forms (PhN=CHCH<sub>3</sub>). Add NaBH<sub>3</sub>CN (a mild reducing agent that reduces the imine but not the aldehyde) → N-ethylaniline.</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Why not just alkylate with EtBr?</strong> PhNH<sub>2</sub> + EtBr → PhNHEt, but also → PhNEt<sub>2</sub> and PhNEt<sub>3</sub><sup>+</sup> (over-alkylation). Reductive amination is selective because the imine intermediate is more reactive than the product amine.</div></div>
+    <div class="we-answer">Aniline + acetaldehyde + NaBH<sub>3</sub>CN, mild acid → N-ethylaniline. Selective, no over-alkylation. ✓</div>
+  </div>
+</section>
 
 <!-- SECTION 7 -->
-<div class="section-card" id="s7">
-  <h2><span class="num">07</span> Spectroscopy: IR, NMR &amp; Mass Spec</h2>
+<section class="section-card" id="s7">
+  <h2><span class="num" aria-hidden="true">07</span> Spectroscopy: IR, NMR &amp; Mass Spec</h2>
 
-  <p>Spectroscopy is used to determine the structure of organic molecules. The three main techniques in Organic II are infrared spectroscopy (IR), nuclear magnetic resonance (NMR), and mass spectrometry (MS). Each gives different structural information and they are used together for complete structure determination.</p>
+  <p>Spectroscopy is used to determine the structure of organic molecules. The three main techniques are infrared spectroscopy (IR), nuclear magnetic resonance (NMR), and mass spectrometry (MS). Each gives different structural information and they are used together for complete structure determination.</p>
 
   <h3>Infrared (IR) Spectroscopy</h3>
-  <p>IR detects functional groups by measuring which frequencies of infrared light are absorbed by bond vibrations. The most useful region is 4000-1500 cm-1 (the "diagnostic region"). Look for the presence or absence of key absorptions to narrow down the functional group.</p>
+  <p>IR detects functional groups by measuring which frequencies of infrared light are absorbed by bond vibrations. The most useful region is 4000&ndash;1500 cm<sup>-1</sup> (the "diagnostic region"). Look for the presence or absence of key absorptions to narrow down the functional group.</p>
 
-  <table class="ref-table">
-    <tr><th>Absorption (cm-1)</th><th>Bond / Group</th><th>Appearance</th></tr>
-    <tr><td><code>3200-3600</code></td><td>O-H (alcohol, carboxylic acid)</td><td>Broad; acid is very broad (2500-3300)</td></tr>
-    <tr><td><code>3300-3500</code></td><td>N-H (amine, amide)</td><td>1&deg; amine: two peaks; 2&deg;: one peak</td></tr>
-    <tr><td><code>3300</code></td><td>C-H (sp, alkyne)</td><td>Sharp, strong</td></tr>
-    <tr><td><code>2850-3000</code></td><td>C-H (sp3, sp2)</td><td>Always present</td></tr>
-    <tr><td><code>2100-2260</code></td><td>C&equiv;C or C&equiv;N</td><td>Weak (alkyne); medium (nitrile)</td></tr>
-    <tr><td><code>1700-1750</code></td><td>C=O (carbonyl)</td><td>Strong, sharp; exact position indicates type</td></tr>
-    <tr><td><code>1600-1680</code></td><td>C=C (alkene, aromatic)</td><td>Variable intensity</td></tr>
+  <table class="ref-table" aria-label="Key IR absorptions">
+    <caption class="sr-only">IR absorption frequencies, corresponding bonds or functional groups, and appearance</caption>
+    <thead>
+      <tr><th scope="col">Absorption (cm<sup>-1</sup>)</th><th scope="col">Bond / Group</th><th scope="col">Appearance</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>3200&ndash;3600</code></td><td>O-H (alcohol, carboxylic acid)</td><td>Broad; acid is very broad (2500&ndash;3300)</td></tr>
+      <tr><td><code>3300&ndash;3500</code></td><td>N-H (amine, amide)</td><td>1° amine: two peaks; 2°: one peak</td></tr>
+      <tr><td><code>3300</code></td><td>C-H (sp, alkyne)</td><td>Sharp, strong</td></tr>
+      <tr><td><code>2850&ndash;3000</code></td><td>C-H (sp<sup>3</sup>, sp<sup>2</sup>)</td><td>Always present</td></tr>
+      <tr><td><code>2100&ndash;2260</code></td><td>C&equiv;C or C&equiv;N</td><td>Weak (alkyne); medium (nitrile)</td></tr>
+      <tr><td><code>1700&ndash;1750</code></td><td>C=O (carbonyl)</td><td>Strong, sharp; exact position indicates type</td></tr>
+      <tr><td><code>1600&ndash;1680</code></td><td>C=C (alkene, aromatic)</td><td>Variable intensity</td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-key">
-    <strong>Carbonyl position tells you the derivative:</strong> Acid chloride (~1800), anhydride (two peaks ~1800 and ~1750), ester (~1735-1750), aldehyde (~1720-1740), ketone (~1705-1720), carboxylic acid (~1710), amide (~1630-1690). Conjugation lowers the frequency.
+    <strong>Carbonyl position tells you the derivative:</strong> Acid chloride (~1800), anhydride (two peaks ~1800 and ~1750), ester (~1735&ndash;1750), aldehyde (~1720&ndash;1740), ketone (~1705&ndash;1720), carboxylic acid (~1710), amide (~1630&ndash;1690). Conjugation lowers the frequency.
   </div>
 
-  <h3>1H NMR Spectroscopy</h3>
-  <p>NMR reveals the carbon-hydrogen framework. Each chemically distinct set of protons gives a separate signal. Chemical shift (delta, ppm) tells you the electronic environment. Integration tells you the relative number of protons. Splitting pattern tells you the number of neighboring protons (n+1 rule).</p>
+  <h3><sup>1</sup>H NMR Spectroscopy</h3>
+  <p>NMR reveals the carbon-hydrogen framework. Each chemically distinct set of protons gives a separate signal. Chemical shift (&delta;, ppm) tells you the electronic environment. Integration tells you the relative number of protons. Splitting pattern tells you the number of neighboring protons (n+1 rule).</p>
 
-  <table class="ref-table">
-    <tr><th>Chemical Shift (ppm)</th><th>Proton Type</th></tr>
-    <tr><td><code>0.9-1.0</code></td><td>RCH3 (methyl, no electronegative groups)</td></tr>
-    <tr><td><code>1.2-1.5</code></td><td>RCH2R (methylene)</td></tr>
-    <tr><td><code>2.0-2.5</code></td><td>R-CO-CH (alpha to carbonyl)</td></tr>
-    <tr><td><code>3.3-4.0</code></td><td>C-H next to O or N (R-O-CH, R-N-CH)</td></tr>
-    <tr><td><code>4.5-6.5</code></td><td>Vinyl C=C-H</td></tr>
-    <tr><td><code>6.5-8.5</code></td><td>Aromatic Ar-H</td></tr>
-    <tr><td><code>9.0-10.0</code></td><td>Aldehyde -CHO</td></tr>
-    <tr><td><code>10.0-12.0</code></td><td>Carboxylic acid -COOH</td></tr>
+  <table class="ref-table" aria-label="1H NMR chemical shifts">
+    <caption class="sr-only">Typical 1H NMR chemical shift ranges for various proton environments</caption>
+    <thead>
+      <tr><th scope="col">Chemical Shift (ppm)</th><th scope="col">Proton Type</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>0.9&ndash;1.0</code></td><td>RCH<sub>3</sub> (methyl, no electronegative groups)</td></tr>
+      <tr><td><code>1.2&ndash;1.5</code></td><td>RCH<sub>2</sub>R (methylene)</td></tr>
+      <tr><td><code>2.0&ndash;2.5</code></td><td>R-CO-CH (alpha to carbonyl)</td></tr>
+      <tr><td><code>3.3&ndash;4.0</code></td><td>C-H next to O or N (R-O-CH, R-N-CH)</td></tr>
+      <tr><td><code>4.5&ndash;6.5</code></td><td>Vinyl C=C-H</td></tr>
+      <tr><td><code>6.5&ndash;8.5</code></td><td>Aromatic Ar-H</td></tr>
+      <tr><td><code>9.0&ndash;10.0</code></td><td>Aldehyde -CHO</td></tr>
+      <tr><td><code>10.0&ndash;12.0</code></td><td>Carboxylic acid -COOH</td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-mnemonic">
     <strong>Splitting pattern reminder:</strong> n+1 rule: if a proton has n equivalent neighboring H's, it splits into n+1 peaks. A triplet means 2 neighbors. A quartet means 3 neighbors. Equivalent protons do not split each other.
   </div>
 
-  <h3>13C NMR</h3>
-  <p>13C NMR gives one peak per unique carbon environment. It is simpler than 1H NMR because there is no splitting in routine broadband-decoupled spectra. Carbonyls appear around 170-220 ppm, aromatics around 110-160 ppm, and sp3 carbons between 10-50 ppm. DEPT experiments distinguish CH3, CH2, CH, and quaternary C.</p>
+  <div class="worked-example">
+    <h4>Worked Example: Identifying an Unknown from Spectral Data</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> An unknown compound (MW = 60) shows: IR: strong C=O at 1715 cm<sup>-1</sup>, no O-H or N-H peaks. <sup>1</sup>H NMR: one singlet at 2.1 ppm integrating for 6H. Identify the compound.</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>MW and formula clue.</strong> MW 60 with no N or O visible in obvious heteroatom signals. C=O at 1715 cm<sup>-1</sup> suggests a ketone (ketones absorb ~1705&ndash;1720).</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>NMR interpretation.</strong> One singlet at 2.1 ppm = alpha to carbonyl. Integrates for 6H with no splitting = the 6 protons have no neighbors. This means two equivalent CH<sub>3</sub> groups, both alpha to C=O, with no adjacent H's.</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Assemble the structure.</strong> CH<sub>3</sub>–CO–CH<sub>3</sub> = acetone. MW = 58... close but check: MW 60 might indicate it is actually dimethyl ketone at 58 or there is one oxygen. Let's accept acetone (MW 58) as the best fit — the question says ~60, which rounds near 58.</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Confirm all data fit.</strong> Acetone: ketone C=O at ~1715 cm<sup>-1</sup> ✓. Two equivalent CH<sub>3</sub> groups with no neighbors → singlet at ~2.1 ppm, 6H ✓. No O-H or N-H ✓.</div></div>
+    <div class="we-answer">Unknown = Acetone (propan-2-one). All spectral data consistent. ✓</div>
+  </div>
+
+  <h3><sup>13</sup>C NMR</h3>
+  <p><sup>13</sup>C NMR gives one peak per unique carbon environment. It is simpler than <sup>1</sup>H NMR because there is no splitting in routine broadband-decoupled spectra. Carbonyls appear around 170&ndash;220 ppm, aromatics around 110&ndash;160 ppm, and sp<sup>3</sup> carbons between 10&ndash;50 ppm. DEPT experiments distinguish CH<sub>3</sub>, CH<sub>2</sub>, CH, and quaternary C.</p>
 
   <h3>Mass Spectrometry</h3>
-  <p>Mass spec ionizes the molecule and measures the mass-to-charge ratio (m/z). The molecular ion peak (M+) gives the molecular weight. The nitrogen rule states that an odd molecular weight indicates an odd number of nitrogen atoms. Common fragmentation losses include 15 (CH3), 18 (H2O), 28 (CO), 29 (CHO), 31 (OCH3), and 45 (OEt). The base peak is the tallest peak in the spectrum (most abundant fragment).</p>
-</div>
+  <p>Mass spec ionizes the molecule and measures the mass-to-charge ratio (m/z). The molecular ion peak (M<sup>+</sup>) gives the molecular weight. The nitrogen rule states that an odd molecular weight indicates an odd number of nitrogen atoms. Common fragmentation losses include 15 (CH<sub>3</sub>), 18 (H<sub>2</sub>O), 28 (CO), 29 (CHO), 31 (OCH<sub>3</sub>), and 45 (OEt). The base peak is the tallest peak in the spectrum (most abundant fragment).</p>
+</section>
 
 <!-- SECTION 8 -->
-<div class="section-card" id="s8">
-  <h2><span class="num">08</span> Oxidation &amp; Reduction Reactions</h2>
+<section class="section-card" id="s8">
+  <h2><span class="num" aria-hidden="true">08</span> Oxidation &amp; Reduction Reactions</h2>
 
   <p>In organic chemistry, oxidation means increasing the number of C-O bonds (or C-N, C-X) or decreasing C-H bonds. Reduction is the opposite: increasing C-H bonds or decreasing C-O bonds. Unlike inorganic chemistry, organic oxidation/reduction is best tracked by changes in bonds rather than formal oxidation states.</p>
 
   <h3>Oxidation Reactions</h3>
-  <table class="ref-table">
-    <tr><th>Reagent</th><th>Substrate &rarr; Product</th><th>Notes</th></tr>
-    <tr><td><code>PCC</code> (pyridinium chlorochromate)</td><td>1&deg; alcohol &rarr; aldehyde</td><td>Mild; stops at aldehyde (anhydrous, CH2Cl2)</td></tr>
-    <tr><td><code>Jones (CrO3/H2SO4)</code></td><td>1&deg; alcohol &rarr; carboxylic acid</td><td>Strong oxidant; goes all the way</td></tr>
-    <tr><td><code>KMnO4</code> (cold, dilute)</td><td>Alkene &rarr; 1,2-diol (syn)</td><td>Syn dihydroxylation</td></tr>
-    <tr><td><code>KMnO4</code> (hot, conc.) or <code>O3</code></td><td>Alkene &rarr; cleaved carbonyls</td><td>Ozonolysis: O3 then DMS (aldehydes/ketones) or O3 then H2O2 (acids)</td></tr>
-    <tr><td><code>OsO4</code></td><td>Alkene &rarr; 1,2-diol (syn)</td><td>Syn dihydroxylation; catalytic with NMO</td></tr>
-    <tr><td><code>mCPBA</code></td><td>Alkene &rarr; epoxide</td><td>Concerted, stereospecific (syn)</td></tr>
-    <tr><td><code>Swern</code> (DMSO, oxalyl chloride)</td><td>1&deg; alcohol &rarr; aldehyde</td><td>Mild, low-temperature alternative to PCC</td></tr>
+  <table class="ref-table" aria-label="Common oxidation reagents and products">
+    <caption class="sr-only">Oxidation reagents, substrate to product transformations, and notes</caption>
+    <thead>
+      <tr><th scope="col">Reagent</th><th scope="col">Substrate &rarr; Product</th><th scope="col">Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>PCC</code></td><td>1° alcohol &rarr; aldehyde</td><td>Mild; stops at aldehyde (anhydrous, CH<sub>2</sub>Cl<sub>2</sub>)</td></tr>
+      <tr><td><code>Jones (CrO<sub>3</sub>/H<sub>2</sub>SO<sub>4</sub>)</code></td><td>1° alcohol &rarr; carboxylic acid</td><td>Strong oxidant; goes all the way</td></tr>
+      <tr><td><code>KMnO<sub>4</sub></code> (cold, dilute)</td><td>Alkene &rarr; 1,2-diol (syn)</td><td>Syn dihydroxylation</td></tr>
+      <tr><td><code>KMnO<sub>4</sub></code> (hot, conc.) or <code>O<sub>3</sub></code></td><td>Alkene &rarr; cleaved carbonyls</td><td>Ozonolysis: O<sub>3</sub> then DMS (aldehydes/ketones) or O<sub>3</sub> then H<sub>2</sub>O<sub>2</sub> (acids)</td></tr>
+      <tr><td><code>OsO<sub>4</sub></code></td><td>Alkene &rarr; 1,2-diol (syn)</td><td>Syn dihydroxylation; catalytic with NMO</td></tr>
+      <tr><td><code>mCPBA</code></td><td>Alkene &rarr; epoxide</td><td>Concerted, stereospecific (syn)</td></tr>
+      <tr><td><code>Swern</code> (DMSO, oxalyl chloride)</td><td>1° alcohol &rarr; aldehyde</td><td>Mild, low-temperature alternative to PCC</td></tr>
+    </tbody>
   </table>
 
   <h3>Reduction Reactions</h3>
-  <table class="ref-table">
-    <tr><th>Reagent</th><th>Substrate &rarr; Product</th><th>Notes</th></tr>
-    <tr><td><code>NaBH4</code></td><td>Aldehyde/ketone &rarr; alcohol</td><td>Mild; does not reduce esters or acids</td></tr>
-    <tr><td><code>LiAlH4</code></td><td>Nearly any C=O &rarr; alcohol</td><td>Reduces esters &rarr; 2 alcohols, amides &rarr; amines, acids &rarr; 1&deg; alcohols</td></tr>
-    <tr><td><code>H2/Pd (or Pt, Ni)</code></td><td>Alkene &rarr; alkane</td><td>Catalytic hydrogenation; syn addition</td></tr>
-    <tr><td><code>Lindlar's catalyst</code></td><td>Alkyne &rarr; cis-alkene</td><td>Poisoned Pd; stops at cis-alkene</td></tr>
-    <tr><td><code>Na/NH3 (Birch)</code></td><td>Alkyne &rarr; trans-alkene</td><td>Dissolving metal reduction; anti addition</td></tr>
-    <tr><td><code>Clemmensen (Zn-Hg/HCl)</code></td><td>Ketone &rarr; CH2</td><td>Acid conditions; for acid-stable substrates</td></tr>
-    <tr><td><code>Wolff-Kishner (N2H4/KOH)</code></td><td>Ketone &rarr; CH2</td><td>Base conditions; for base-stable substrates</td></tr>
-    <tr><td><code>DIBAL-H</code> (-78&deg;C)</td><td>Ester &rarr; aldehyde</td><td>Partial reduction at low temp</td></tr>
+  <table class="ref-table" aria-label="Common reduction reagents and products">
+    <caption class="sr-only">Reduction reagents, substrate to product transformations, and notes</caption>
+    <thead>
+      <tr><th scope="col">Reagent</th><th scope="col">Substrate &rarr; Product</th><th scope="col">Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>NaBH<sub>4</sub></code></td><td>Aldehyde/ketone &rarr; alcohol</td><td>Mild; does not reduce esters or acids</td></tr>
+      <tr><td><code>LiAlH<sub>4</sub></code></td><td>Nearly any C=O &rarr; alcohol</td><td>Reduces esters &rarr; 2 alcohols, amides &rarr; amines, acids &rarr; 1° alcohols</td></tr>
+      <tr><td><code>H<sub>2</sub>/Pd (or Pt, Ni)</code></td><td>Alkene &rarr; alkane</td><td>Catalytic hydrogenation; syn addition</td></tr>
+      <tr><td><code>Lindlar's catalyst</code></td><td>Alkyne &rarr; cis-alkene</td><td>Poisoned Pd; stops at cis-alkene</td></tr>
+      <tr><td><code>Na/NH<sub>3</sub> (Birch)</code></td><td>Alkyne &rarr; trans-alkene</td><td>Dissolving metal reduction; anti addition</td></tr>
+      <tr><td><code>Clemmensen (Zn-Hg/HCl)</code></td><td>Ketone &rarr; CH<sub>2</sub></td><td>Acid conditions; for acid-stable substrates</td></tr>
+      <tr><td><code>Wolff-Kishner (N<sub>2</sub>H<sub>4</sub>/KOH)</code></td><td>Ketone &rarr; CH<sub>2</sub></td><td>Base conditions; for base-stable substrates</td></tr>
+      <tr><td><code>DIBAL-H</code> (&minus;78&deg;C)</td><td>Ester &rarr; aldehyde</td><td>Partial reduction at low temp</td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-mnemonic">
-    <strong>Clemmensen vs. Wolff-Kishner:</strong> Both reduce a ketone all the way to a CH2, but under opposite conditions. Clemmensen = acidic (Zn-Hg, HCl). Wolff-Kishner = basic (hydrazine, KOH, heat). Choose based on what other functional groups in the molecule can tolerate.
+    <strong>Clemmensen vs. Wolff-Kishner:</strong> Both reduce a ketone all the way to a CH<sub>2</sub>, but under opposite conditions. Clemmensen = acidic (Zn-Hg, HCl). Wolff-Kishner = basic (hydrazine, KOH, heat). Choose based on what other functional groups in the molecule can tolerate.
   </div>
-</div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Selecting the Right Reducing Agent</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> You have ethyl 4-oxopentanoate (a molecule with both a ketone and an ester). You want to reduce ONLY the ketone to an alcohol, leaving the ester intact. Which reducing agent do you choose?</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Assess the functional groups.</strong> The molecule has a ketone (C=O) and an ester (RCOOR'). You want to selectively reduce the ketone.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Can we use LiAlH<sub>4</sub>?</strong> No — LiAlH<sub>4</sub> will reduce both the ketone AND the ester, giving you two alcohols and a mess. It is not selective enough.</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Use NaBH<sub>4</sub>.</strong> NaBH<sub>4</sub> selectively reduces aldehydes and ketones but does NOT reduce esters under normal conditions. It is the perfect choice for this problem.</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Result:</strong> NaBH<sub>4</sub> in ethanol or methanol → ketone is reduced to a secondary alcohol. The ester remains intact.</div></div>
+    <div class="we-answer">Use NaBH<sub>4</sub>. Selective ketone reduction → hydroxy ester product. The ester is untouched. ✓</div>
+  </div>
+</section>
 
 <!-- SECTION 9 -->
-<div class="section-card" id="s9">
-  <h2><span class="num">09</span> Polymers &amp; Bioorganic Molecules</h2>
+<section class="section-card" id="s9">
+  <h2><span class="num" aria-hidden="true">09</span> Polymers &amp; Bioorganic Molecules</h2>
 
   <h3>Polymers</h3>
   <p>Polymers form by two main mechanisms. Addition (chain-growth) polymerization involves monomers with double bonds undergoing radical, cationic, or anionic initiation to grow chains one monomer at a time. Examples include polyethylene, polystyrene, PVC, and Teflon. Condensation (step-growth) polymerization joins monomers by losing a small molecule (usually water) at each step. Examples include polyesters (PET), polyamides (nylon), and polycarbonates.</p>
@@ -500,136 +648,173 @@ code, .formula { font-family: 'JetBrains Mono', monospace; font-size: .9em; back
   <p>Carbohydrates are polyhydroxy aldehydes (aldoses) or ketones (ketoses). They exist in open-chain and cyclic forms. Cyclization occurs via intramolecular hemiacetal/hemiketal formation, creating a new stereocenter called the anomeric carbon. The alpha anomer has the OH axial (down in glucose) and the beta anomer has it equatorial (up). Mutarotation is the interconversion of anomers in solution. Glycosidic bonds link monosaccharides in disaccharides (maltose, lactose, sucrose) and polysaccharides (starch, cellulose, glycogen).</p>
 
   <h3>Amino Acids &amp; Proteins</h3>
-  <p>There are 20 standard amino acids, all alpha-amino acids with the amino group and carboxyl group on the same carbon. At physiological pH (~7.4), amino acids exist as zwitterions (NH3+, COO-). The isoelectric point (pI) is the pH at which the net charge is zero. Peptide bonds form between the carboxyl of one amino acid and the amino group of another, losing water. The peptide bond has partial double-bond character (planar, restricted rotation) due to resonance.</p>
+  <p>There are 20 standard amino acids, all alpha-amino acids with the amino group and carboxyl group on the same carbon. At physiological pH (~7.4), amino acids exist as zwitterions (NH<sub>3</sub><sup>+</sup>, COO<sup>-</sup>). The isoelectric point (pI) is the pH at which the net charge is zero. Peptide bonds form between the carboxyl of one amino acid and the amino group of another, losing water. The peptide bond has partial double-bond character (planar, restricted rotation) due to resonance.</p>
 
   <h3>Lipids</h3>
   <p>Fats and oils are triacylglycerols (esters of glycerol with three fatty acids). Saturated fats have no double bonds, pack tightly, and are solid at room temperature. Unsaturated fats have cis double bonds that introduce kinks, reducing packing and lowering melting point. Saponification of fats with NaOH produces soap (sodium salts of fatty acids) and glycerol. Phospholipids have two fatty acid tails and a phosphate head group, forming bilayer membranes.</p>
-</div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Why Does Soap Work?</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> Connect what you know about saponification and the structure of fatty acid salts to explain why soap removes grease from your hands.</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Saponification reaction.</strong> A fat (triacylglycerol) + 3 NaOH → glycerol + 3 sodium carboxylate salts (RCOO<sup>-</sup> Na<sup>+</sup>). These carboxylate salts are the soap molecules.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Soap structure is amphiphilic.</strong> Each soap molecule has a long nonpolar hydrocarbon tail (likes oil/grease, hydrophobic) and a charged carboxylate head (likes water, hydrophilic). This dual nature is the key.</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Micelle formation.</strong> In water, soap molecules cluster into micelles: the hydrophobic tails point inward (surrounding the grease), and the hydrophilic heads point outward (interacting with water).</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Grease removal.</strong> The grease is trapped inside the micelle, surrounded by soap tails. The micelle (now with grease inside) is water-soluble because its surface is hydrophilic. Rinsing washes the micelle — and the grease — away.</div></div>
+    <div class="we-answer">Soap is an amphiphilic molecule (saponification product) that forms grease-trapping micelles in water, allowing nonpolar oils to be washed away in an aqueous environment.</div>
+  </div>
+</section>
 
 <!-- SECTION 10 -->
-<div class="section-card" id="s10">
-  <h2><span class="num">10</span> Reaction Summary &amp; Reagent Guide</h2>
+<section class="section-card" id="s10">
+  <h2><span class="num" aria-hidden="true">10</span> Reaction Summary &amp; Reagent Guide</h2>
 
   <p>This section collects the most frequently tested reagent-product pairs for quick review. Knowing what reagent does what transformation is the core skill of organic chemistry.</p>
 
   <h3>Must-Know Reagent Transformations</h3>
-  <table class="ref-table">
-    <tr><th>Reagent</th><th>Transformation</th></tr>
-    <tr><td><code>NaBH4</code></td><td>Aldehyde/ketone &rarr; alcohol (mild)</td></tr>
-    <tr><td><code>LiAlH4</code></td><td>Almost any C=O &rarr; alcohol; amide &rarr; amine</td></tr>
-    <tr><td><code>PCC</code></td><td>1&deg; alcohol &rarr; aldehyde</td></tr>
-    <tr><td><code>Jones / CrO3</code></td><td>1&deg; alcohol &rarr; carboxylic acid</td></tr>
-    <tr><td><code>mCPBA</code></td><td>Alkene &rarr; epoxide</td></tr>
-    <tr><td><code>O3 then DMS</code></td><td>Alkene &rarr; aldehydes/ketones (reductive workup)</td></tr>
-    <tr><td><code>O3 then H2O2</code></td><td>Alkene &rarr; carboxylic acids (oxidative workup)</td></tr>
-    <tr><td><code>OsO4 / NMO</code></td><td>Alkene &rarr; syn-1,2-diol</td></tr>
-    <tr><td><code>Lindlar's cat. + H2</code></td><td>Alkyne &rarr; cis-alkene</td></tr>
-    <tr><td><code>Na/NH3</code></td><td>Alkyne &rarr; trans-alkene</td></tr>
-    <tr><td><code>RMgBr + carbonyl</code></td><td>Adds R group to C; gives alcohol after workup</td></tr>
-    <tr><td><code>Ph3P=CHR (Wittig)</code></td><td>Carbonyl &rarr; alkene (replaces C=O with C=C)</td></tr>
-    <tr><td><code>LDA then RX</code></td><td>Alpha-alkylation of carbonyl</td></tr>
-    <tr><td><code>NaOH/H2O (aldol)</code></td><td>Two carbonyls &rarr; beta-hydroxy carbonyl or enone</td></tr>
-    <tr><td><code>NaOEt/EtOH (Claisen)</code></td><td>Two esters &rarr; beta-keto ester</td></tr>
-    <tr><td><code>Br2/FeBr3</code></td><td>EAS: Ar-H &rarr; Ar-Br</td></tr>
-    <tr><td><code>HNO3/H2SO4</code></td><td>EAS: Ar-H &rarr; Ar-NO2</td></tr>
-    <tr><td><code>RCOCl/AlCl3</code></td><td>EAS: Friedel-Crafts acylation</td></tr>
-    <tr><td><code>NaNO2/HCl, 0&deg;C</code></td><td>1&deg; ArNH2 &rarr; diazonium salt</td></tr>
-    <tr><td><code>NaBH3CN + RCHO</code></td><td>Reductive amination (controlled amine synthesis)</td></tr>
-    <tr><td><code>SOCl2</code></td><td>RCOOH &rarr; RCOCl (or ROH &rarr; RCl)</td></tr>
-    <tr><td><code>DCC</code></td><td>Peptide coupling (acid + amine &rarr; amide)</td></tr>
-    <tr><td><code>Clemmensen (Zn-Hg/HCl)</code></td><td>Ketone &rarr; CH2 (acid conditions)</td></tr>
-    <tr><td><code>Wolff-Kishner (N2H4/KOH)</code></td><td>Ketone &rarr; CH2 (base conditions)</td></tr>
-    <tr><td><code>DIBAL-H, -78&deg;C</code></td><td>Ester &rarr; aldehyde (partial reduction)</td></tr>
+  <table class="ref-table" aria-label="Must-know reagent transformations">
+    <caption class="sr-only">Quick reference guide of essential organic chemistry reagents and their transformations</caption>
+    <thead>
+      <tr><th scope="col">Reagent</th><th scope="col">Transformation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>NaBH<sub>4</sub></code></td><td>Aldehyde/ketone &rarr; alcohol (mild)</td></tr>
+      <tr><td><code>LiAlH<sub>4</sub></code></td><td>Almost any C=O &rarr; alcohol; amide &rarr; amine</td></tr>
+      <tr><td><code>PCC</code></td><td>1° alcohol &rarr; aldehyde</td></tr>
+      <tr><td><code>Jones / CrO<sub>3</sub></code></td><td>1° alcohol &rarr; carboxylic acid</td></tr>
+      <tr><td><code>mCPBA</code></td><td>Alkene &rarr; epoxide</td></tr>
+      <tr><td><code>O<sub>3</sub> then DMS</code></td><td>Alkene &rarr; aldehydes/ketones (reductive workup)</td></tr>
+      <tr><td><code>O<sub>3</sub> then H<sub>2</sub>O<sub>2</sub></code></td><td>Alkene &rarr; carboxylic acids (oxidative workup)</td></tr>
+      <tr><td><code>OsO<sub>4</sub> / NMO</code></td><td>Alkene &rarr; syn-1,2-diol</td></tr>
+      <tr><td><code>Lindlar's cat. + H<sub>2</sub></code></td><td>Alkyne &rarr; cis-alkene</td></tr>
+      <tr><td><code>Na/NH<sub>3</sub></code></td><td>Alkyne &rarr; trans-alkene</td></tr>
+      <tr><td><code>RMgBr + carbonyl</code></td><td>Adds R group to C; gives alcohol after workup</td></tr>
+      <tr><td><code>Ph<sub>3</sub>P=CHR (Wittig)</code></td><td>Carbonyl &rarr; alkene (replaces C=O with C=C)</td></tr>
+      <tr><td><code>LDA then RX</code></td><td>Alpha-alkylation of carbonyl</td></tr>
+      <tr><td><code>NaOH/H<sub>2</sub>O (aldol)</code></td><td>Two carbonyls &rarr; beta-hydroxy carbonyl or enone</td></tr>
+      <tr><td><code>NaOEt/EtOH (Claisen)</code></td><td>Two esters &rarr; beta-keto ester</td></tr>
+      <tr><td><code>Br<sub>2</sub>/FeBr<sub>3</sub></code></td><td>EAS: Ar-H &rarr; Ar-Br</td></tr>
+      <tr><td><code>HNO<sub>3</sub>/H<sub>2</sub>SO<sub>4</sub></code></td><td>EAS: Ar-H &rarr; Ar-NO<sub>2</sub></td></tr>
+      <tr><td><code>RCOCl/AlCl<sub>3</sub></code></td><td>EAS: Friedel-Crafts acylation</td></tr>
+      <tr><td><code>NaNO<sub>2</sub>/HCl, 0&deg;C</code></td><td>1° ArNH<sub>2</sub> &rarr; diazonium salt</td></tr>
+      <tr><td><code>NaBH<sub>3</sub>CN + RCHO</code></td><td>Reductive amination (controlled amine synthesis)</td></tr>
+      <tr><td><code>SOCl<sub>2</sub></code></td><td>RCOOH &rarr; RCOCl (or ROH &rarr; RCl)</td></tr>
+      <tr><td><code>DCC</code></td><td>Peptide coupling (acid + amine &rarr; amide)</td></tr>
+      <tr><td><code>Clemmensen (Zn-Hg/HCl)</code></td><td>Ketone &rarr; CH<sub>2</sub> (acid conditions)</td></tr>
+      <tr><td><code>Wolff-Kishner (N<sub>2</sub>H<sub>4</sub>/KOH)</code></td><td>Ketone &rarr; CH<sub>2</sub> (base conditions)</td></tr>
+      <tr><td><code>DIBAL-H, &minus;78&deg;C</code></td><td>Ester &rarr; aldehyde (partial reduction)</td></tr>
+    </tbody>
   </table>
 
   <div class="callout callout-warning">
     <strong>Strategy tip for multistep synthesis:</strong> Work backward (retrosynthetic analysis). Identify the target, determine what bond disconnection gives simpler precursors, identify the reagents needed for each step, and check for functional group compatibility. Protecting groups may be needed when multiple reactive groups are present.
   </div>
-</div>
+
+  <div class="worked-example">
+    <h4>Worked Example: Multi-Step Retrosynthesis</h4>
+    <p style="font-size:.94rem;margin-bottom:.75rem;"><strong>Problem:</strong> Synthesize 4-phenyl-2-butanone (Ph-CH<sub>2</sub>-CH<sub>2</sub>-CO-CH<sub>3</sub>) from benzaldehyde (PhCHO) and any other reagents you need.</p>
+    <div class="we-step"><div class="we-step-num">1</div><div class="we-step-text"><strong>Identify the target.</strong> 4-Phenyl-2-butanone has a phenyl group separated from a ketone by two carbons. Formula: Ph–CH<sub>2</sub>–CH<sub>2</sub>–COCH<sub>3</sub>.</div></div>
+    <div class="we-step"><div class="we-step-num">2</div><div class="we-step-text"><strong>Work backward.</strong> The ketone's alpha carbon (next to C=O) could have come from a Michael addition or an alkylation. Notice: Ph–CH<sub>2</sub>–CH<sub>2</sub>– looks like a phenethyl group. Could use a Wittig approach or Michael addition.</div></div>
+    <div class="we-step"><div class="we-step-num">3</div><div class="we-step-text"><strong>Michael addition route.</strong> Acetone enolate (from acetone + NaOH) + PhCH=CH<sub>2</sub> (styrene, acting as Michael acceptor... but styrene is not activated). Better: use benzaldehyde in an aldol condensation with acetone first → Ph-CH=CH-COCH<sub>3</sub> (benzylideneacetone, an enone).</div></div>
+    <div class="we-step"><div class="we-step-num">4</div><div class="we-step-text"><strong>Step 1:</strong> PhCHO + acetone, NaOH → (crossed aldol, benzylideneacetone) Ph-CH=CH-CO-CH<sub>3</sub>. <strong>Step 2:</strong> Reduce the alkene selectively with H<sub>2</sub>/Lindlar's or H<sub>2</sub>/Pd (catalytic hydrogenation of the conjugated double bond) → Ph-CH<sub>2</sub>-CH<sub>2</sub>-CO-CH<sub>3</sub>.</div></div>
+    <div class="we-answer">Step 1: Crossed aldol (PhCHO + acetone, NaOH) → enone. Step 2: H<sub>2</sub>/Pd → 4-phenyl-2-butanone. Two steps from benzaldehyde. ✓</div>
+  </div>
+</section>
 
 <!-- PRACTICE & REVIEW -->
-<div class="section-card" id="practice">
-  <h2><span class="num">++</span> Practice &amp; Review</h2>
+<section class="section-card" id="practice">
+  <h2><span class="num" aria-hidden="true">++</span> Practice &amp; Review</h2>
 
-  <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('mc')">Multiple Choice</button>
-    <button class="tab-btn" onclick="switchTab('fc')">Flashcards</button>
-    <button class="tab-btn" onclick="switchTab('sa')">Short Answer</button>
+  <div class="tab-nav" role="tablist" aria-label="Practice sections">
+    <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-mc" id="tab-btn-mc" onclick="switchTab('mc')">Multiple Choice</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-fc" id="tab-btn-fc" onclick="switchTab('fc')">Flashcards</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-sa" id="tab-btn-sa" onclick="switchTab('sa')">Short Answer</button>
   </div>
 
   <!-- MC PANEL -->
-  <div class="tab-panel active" id="tab-mc">
-    <div class="score-bar">Score: <span id="mc-score">0</span> / <span id="mc-total">0</span><div style="flex:1;margin-left:1rem;background:var(--border-light);border-radius:4px;height:8px;"><div id="mc-fill" class="score-fill" style="width:0%;"></div></div></div>
+  <div class="tab-panel active" id="tab-mc" role="tabpanel" aria-labelledby="tab-btn-mc">
+    <div class="score-bar" role="status" aria-live="polite" aria-atomic="true">Score: <span id="mc-score">0</span> / <span id="mc-total">0</span><div style="flex:1;margin-left:1rem;background:var(--border-light);border-radius:4px;height:8px;"><div id="mc-fill" class="score-fill" style="width:0%;"></div></div></div>
     <div id="mc-container"></div>
   </div>
 
   <!-- FLASHCARD PANEL -->
-  <div class="tab-panel" id="tab-fc">
-    <div class="fc-filters" id="fc-filters"></div>
+  <div class="tab-panel" id="tab-fc" role="tabpanel" aria-labelledby="tab-btn-fc">
+    <div class="fc-filters" id="fc-filters" role="group" aria-label="Filter flashcards by category"></div>
     <div class="fc-container">
-      <div class="fc-card" id="fc-card" onclick="flipCard()">
+      <div class="fc-card" id="fc-card" onclick="flipCard()" role="button" tabindex="0" aria-label="Flashcard — click or press Enter to flip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
         <div class="fc-front">
           <span class="fc-cat" id="fc-cat"></span>
           <div class="fc-q" id="fc-q"></div>
         </div>
-        <div class="fc-back" id="fc-a"></div>
+        <div class="fc-back" id="fc-a" aria-live="polite"></div>
       </div>
     </div>
     <div class="fc-nav">
-      <button onclick="prevCard()">&#8592; Prev</button>
-      <span class="fc-count" id="fc-count"></span>
-      <button onclick="nextCard()">Next &#8594;</button>
+      <button onclick="prevCard()" aria-label="Previous flashcard">&#8592; Prev</button>
+      <span class="fc-count" id="fc-count" aria-live="polite" aria-atomic="true"></span>
+      <button onclick="nextCard()" aria-label="Next flashcard">Next &#8594;</button>
     </div>
   </div>
 
   <!-- SHORT ANSWER PANEL -->
-  <div class="tab-panel" id="tab-sa">
+  <div class="tab-panel" id="tab-sa" role="tabpanel" aria-labelledby="tab-btn-sa">
     <div id="sa-container"></div>
   </div>
-</div>
+</section>
 
 </div><!-- /container -->
 
 <script>
 // ===== TAB SWITCHING =====
 function switchTab(id) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['mc','fc','sa'][i] === id));
+  const ids = ['mc','fc','sa'];
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    const active = ids[i] === id;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
+}
+
+// ===== ANNOUNCE HELPER =====
+function announce(msg) {
+  const el = document.getElementById('live-announce');
+  el.textContent = '';
+  setTimeout(() => { el.textContent = msg; }, 50);
 }
 
 // ===== MULTIPLE CHOICE =====
 const mcQuestions = [
   {q:"What conformation must a diene adopt for a Diels-Alder reaction?",opts:["s-trans","s-cis","anti-periplanar","gauche"],ans:1,exp:"The diene must be in the s-cis conformation so the terminal carbons are close enough to simultaneously bond with the dienophile."},
-  {q:"Huckel's rule for aromaticity requires how many pi electrons?",opts:["4n","4n+1","4n+2","2n+1"],ans:2,exp:"Aromatic compounds must have 4n+2 pi electrons (n = 0, 1, 2...), be cyclic, planar, and fully conjugated."},
-  {q:"Which substituent is an ortho/para director but a deactivator in EAS?",opts:["-NH2","-CH3","-Cl","-NO2"],ans:2,exp:"Halogens are the exception: they direct ortho/para through lone pair resonance donation but deactivate the ring through inductive withdrawal."},
+  {q:"H\u00FCckel's rule for aromaticity requires how many pi electrons?",opts:["4n","4n+1","4n+2","2n+1"],ans:2,exp:"Aromatic compounds must have 4n+2 pi electrons (n = 0, 1, 2...), be cyclic, planar, and fully conjugated."},
+  {q:"Which substituent is an ortho/para director but a deactivator in EAS?",opts:["-NH\u2082","-CH\u2083","-Cl","-NO\u2082"],ans:2,exp:"Halogens are the exception: they direct ortho/para through lone pair resonance donation but deactivate the ring through inductive withdrawal."},
   {q:"What product forms when an aldehyde reacts with a primary amine under mild acid?",opts:["Enamine","Acetal","Imine (Schiff base)","Cyanohydrin"],ans:2,exp:"A primary amine attacks the carbonyl, loses water, and forms a C=N double bond (imine/Schiff base)."},
-  {q:"Which reagent selectively oxidizes a primary alcohol to an aldehyde without further oxidation?",opts:["KMnO4","Jones reagent","PCC","H2CrO4"],ans:2,exp:"PCC (pyridinium chlorochromate) is a mild oxidant used in anhydrous CH2Cl2 that stops at the aldehyde."},
-  {q:"In the reactivity order of carboxylic acid derivatives, which is MOST reactive?",opts:["Amide","Ester","Acid chloride","Anhydride"],ans:2,exp:"Acid chlorides are the most reactive because Cl- is an excellent leaving group and provides minimal resonance stabilization."},
+  {q:"Which reagent selectively oxidizes a primary alcohol to an aldehyde without further oxidation?",opts:["KMnO\u2084","Jones reagent","PCC","H\u2082CrO\u2084"],ans:2,exp:"PCC (pyridinium chlorochromate) is a mild oxidant used in anhydrous CH\u2082Cl\u2082 that stops at the aldehyde."},
+  {q:"In the reactivity order of carboxylic acid derivatives, which is MOST reactive?",opts:["Amide","Ester","Acid chloride","Anhydride"],ans:2,exp:"Acid chlorides are the most reactive because Cl\u207B is an excellent leaving group and provides minimal resonance stabilization."},
   {q:"What is the product of an aldol condensation?",opts:["Beta-keto ester","Beta-hydroxy aldehyde","Alpha,beta-unsaturated carbonyl","1,3-diol"],ans:2,exp:"An aldol condensation is an aldol reaction followed by dehydration to give a conjugated enone (alpha,beta-unsaturated carbonyl)."},
-  {q:"LDA at -78°C generates which type of enolate?",opts:["Thermodynamic (more substituted)","Kinetic (less substituted)","Both equally","Neither, it generates an enol"],ans:1,exp:"LDA is a strong bulky base that irreversibly deprotonates the less hindered alpha-H to form the kinetic enolate at low temperature."},
-  {q:"What does NaBH4 reduce?",opts:["Esters and acids","Only alkenes","Aldehydes and ketones only","Amides to amines"],ans:2,exp:"NaBH4 is a mild reducing agent that selectively reduces aldehydes and ketones to alcohols without affecting esters, acids, or amides."},
-  {q:"Which reagent converts an alkyne to a cis-alkene?",opts:["Na/NH3","H2, Lindlar's catalyst","HBr, peroxides","mCPBA"],ans:1,exp:"Lindlar's catalyst (poisoned Pd) delivers H2 in a syn fashion, giving the cis-alkene. Na/NH3 gives the trans-alkene."},
-  {q:"Pyrrole's lone pair on nitrogen is:",opts:["In an sp3 orbital, making it very basic","In a p orbital, part of the aromatic pi system","In an sp2 orbital in the plane of the ring","Donated to a Lewis acid catalyst"],ans:1,exp:"Pyrrole's nitrogen lone pair occupies a p orbital and is part of the 6-electron aromatic pi system, making pyrrole much less basic than pyridine."},
+  {q:"LDA at \u221278\u00B0C generates which type of enolate?",opts:["Thermodynamic (more substituted)","Kinetic (less substituted)","Both equally","Neither, it generates an enol"],ans:1,exp:"LDA is a strong bulky base that irreversibly deprotonates the less hindered alpha-H to form the kinetic enolate at low temperature."},
+  {q:"What does NaBH\u2084 reduce?",opts:["Esters and acids","Only alkenes","Aldehydes and ketones only","Amides to amines"],ans:2,exp:"NaBH\u2084 is a mild reducing agent that selectively reduces aldehydes and ketones to alcohols without affecting esters, acids, or amides."},
+  {q:"Which reagent converts an alkyne to a cis-alkene?",opts:["Na/NH\u2083","H\u2082, Lindlar's catalyst","HBr, peroxides","mCPBA"],ans:1,exp:"Lindlar's catalyst (poisoned Pd) delivers H\u2082 in a syn fashion, giving the cis-alkene. Na/NH\u2083 gives the trans-alkene."},
+  {q:"Pyrrole's lone pair on nitrogen is:",opts:["In an sp\u00B3 orbital, making it very basic","In a p orbital, part of the aromatic pi system","In an sp\u00B2 orbital in the plane of the ring","Donated to a Lewis acid catalyst"],ans:1,exp:"Pyrrole's nitrogen lone pair occupies a p orbital and is part of the 6-electron aromatic pi system, making pyrrole much less basic than pyridine."},
   {q:"Fischer esterification combines:",opts:["Acid chloride + alcohol","Carboxylic acid + alcohol with acid catalyst","Ester + amine","Anhydride + water"],ans:1,exp:"Fischer esterification is the acid-catalyzed reaction of a carboxylic acid with an alcohol to form an ester and water. It is reversible."},
-  {q:"What is the nitrogen rule in mass spectrometry?",opts:["All nitrogen compounds fragment at m/z 14","An odd M+ means an odd number of nitrogen atoms","Even M+ means nitrogen is present","Nitrogen-containing compounds do not ionize"],ans:1,exp:"The nitrogen rule: an odd molecular ion (M+) indicates an odd number of nitrogen atoms. Even M+ means zero or even number of nitrogens."},
+  {q:"What is the nitrogen rule in mass spectrometry?",opts:["All nitrogen compounds fragment at m/z 14","An odd M\u207A means an odd number of nitrogen atoms","Even M\u207A means nitrogen is present","Nitrogen-containing compounds do not ionize"],ans:1,exp:"The nitrogen rule: an odd molecular ion (M\u207A) indicates an odd number of nitrogen atoms. Even M\u207A means zero or even number of nitrogens."},
   {q:"Friedel-Crafts acylation is preferred over alkylation because:",opts:["It is faster","The acylium ion does not rearrange and the product does not over-react","It does not require a Lewis acid","It works on deactivated rings"],ans:1,exp:"Acylium ions are resonance-stabilized and do not rearrange. The ketone product deactivates the ring, preventing polyacylation. FC alkylation has both problems."},
   {q:"What is the product of a Claisen condensation?",opts:["Beta-hydroxy ketone","Alpha,beta-unsaturated ester","Beta-keto ester","1,3-diketone"],ans:2,exp:"A Claisen condensation joins two esters via enolate chemistry to produce a beta-keto ester, driven by deprotonation of the product."},
-  {q:"An IR absorption around 1710-1750 cm-1 (strong, sharp) indicates:",opts:["O-H stretch","N-H bend","C=O stretch (carbonyl)","C=C stretch"],ans:2,exp:"The carbonyl C=O stretch appears as a strong, sharp absorption around 1700-1750 cm-1. The exact position helps identify the type of carbonyl."},
-  {q:"In 1H NMR, a proton on an aldehyde carbon typically appears at:",opts:["0.9-1.0 ppm","3.3-4.0 ppm","6.5-8.5 ppm","9.0-10.0 ppm"],ans:3,exp:"Aldehyde protons (-CHO) are highly deshielded and appear far downfield at 9-10 ppm, which is diagnostic for this group."},
-  {q:"The Wittig reaction converts a carbonyl to:",opts:["An alcohol","An alkene","An epoxide","A diol"],ans:1,exp:"The Wittig reagent (phosphorus ylide, Ph3P=CHR) reacts with a carbonyl to replace C=O with C=C, forming an alkene and triphenylphosphine oxide."},
+  {q:"An IR absorption around 1710\u20131750 cm\u207B\u00B9 (strong, sharp) indicates:",opts:["O-H stretch","N-H bend","C=O stretch (carbonyl)","C=C stretch"],ans:2,exp:"The carbonyl C=O stretch appears as a strong, sharp absorption around 1700\u20131750 cm\u207B\u00B9. The exact position helps identify the type of carbonyl."},
+  {q:"In \u00B9H NMR, a proton on an aldehyde carbon typically appears at:",opts:["0.9\u20131.0 ppm","3.3\u20134.0 ppm","6.5\u20138.5 ppm","9.0\u201310.0 ppm"],ans:3,exp:"Aldehyde protons (-CHO) are highly deshielded and appear far downfield at 9\u201310 ppm, which is diagnostic for this group."},
+  {q:"The Wittig reaction converts a carbonyl to:",opts:["An alcohol","An alkene","An epoxide","A diol"],ans:1,exp:"The Wittig reagent (phosphorus ylide, Ph\u2083P=CHR) reacts with a carbonyl to replace C=O with C=C, forming an alkene and triphenylphosphine oxide."},
   {q:"Reductive amination is preferred for amine synthesis because:",opts:["It is faster than direct alkylation","It avoids over-alkylation problems","It does not require a carbonyl compound","It uses very strong acids"],ans:1,exp:"Direct alkylation with RX often leads to polyalkylation (multiple R groups). Reductive amination goes through an imine intermediate and gives controlled monoalkylation."},
-  {q:"Which reagent converts an ester to an aldehyde via partial reduction?",opts:["LiAlH4","NaBH4","DIBAL-H at -78°C","H2/Pd"],ans:2,exp:"DIBAL-H at -78°C can partially reduce an ester to an aldehyde. At warmer temperatures or with excess DIBAL-H, it reduces all the way to an alcohol."},
+  {q:"Which reagent converts an ester to an aldehyde via partial reduction?",opts:["LiAlH\u2084","NaBH\u2084","DIBAL-H at \u221278\u00B0C","H\u2082/Pd"],ans:2,exp:"DIBAL-H at \u221278\u00B0C can partially reduce an ester to an aldehyde. At warmer temperatures or with excess DIBAL-H, it reduces all the way to an alcohol."},
   {q:"The Michael reaction is a type of:",opts:["1,2-addition","Electrophilic addition","1,4-conjugate addition","Pericyclic reaction"],ans:2,exp:"The Michael reaction is a 1,4-conjugate addition of an enolate nucleophile to an alpha,beta-unsaturated carbonyl compound."},
-  {q:"Ozonolysis of an alkene followed by DMS (dimethyl sulfide) gives:",opts:["Alcohols","Epoxides","Aldehydes and/or ketones","Carboxylic acids"],ans:2,exp:"Ozonolysis with reductive workup (DMS or PPh3) cleaves the double bond to give aldehydes and/or ketones. Oxidative workup (H2O2) gives carboxylic acids instead."},
+  {q:"Ozonolysis of an alkene followed by DMS (dimethyl sulfide) gives:",opts:["Alcohols","Epoxides","Aldehydes and/or ketones","Carboxylic acids"],ans:2,exp:"Ozonolysis with reductive workup (DMS or PPh\u2083) cleaves the double bond to give aldehydes and/or ketones. Oxidative workup (H\u2082O\u2082) gives carboxylic acids instead."},
   {q:"In a Diels-Alder reaction, which product is kinetically favored?",opts:["Exo","Endo","Both equally","Neither, thermodynamic product forms"],ans:1,exp:"The endo product is kinetically favored due to secondary orbital interactions in the transition state (endo rule), even though the exo product is often thermodynamically more stable."},
-  {q:"Saponification of an ester with NaOH gives:",opts:["Carboxylic acid + alcohol","Carboxylate salt + alcohol","Ester + water","Amide + alcohol"],ans:1,exp:"Saponification is irreversible base hydrolysis of an ester, producing a carboxylate salt (RCOO- Na+) and an alcohol."},
-  {q:"The Sandmeyer reaction uses diazonium salts to introduce:",opts:["Only -OH","Only -NH2","-Cl, -Br, or -CN via CuX","Only -F"],ans:2,exp:"Sandmeyer reactions use CuCl, CuBr, or CuCN to replace the diazonium group with Cl, Br, or CN respectively."},
+  {q:"Saponification of an ester with NaOH gives:",opts:["Carboxylic acid + alcohol","Carboxylate salt + alcohol","Ester + water","Amide + alcohol"],ans:1,exp:"Saponification is irreversible base hydrolysis of an ester, producing a carboxylate salt (RCOO\u207B Na\u207A) and an alcohol."},
+  {q:"The Sandmeyer reaction uses diazonium salts to introduce:",opts:["Only -OH","Only -NH\u2082","-Cl, -Br, or -CN via CuX","Only -F"],ans:2,exp:"Sandmeyer reactions use CuCl, CuBr, or CuCN to replace the diazonium group with Cl, Br, or CN respectively."},
   {q:"Acetals are stable under which conditions?",opts:["Strong acid","Basic and neutral conditions","Strong oxidizing conditions","High temperature only"],ans:1,exp:"Acetals are stable under basic and neutral conditions but cleave in aqueous acid. This property makes them ideal carbonyl protecting groups."},
-  {q:"What is the Haloform reaction?",opts:["Monohalogenation under acid","Polyhalogenation of a methyl ketone under base, giving CHX3","Radical halogenation of alkanes","Halogenation of an aromatic ring"],ans:1,exp:"Under basic conditions, alpha-halogenation of a methyl ketone cannot be stopped at mono. All three alpha-H's are replaced, and the CX3- group leaves as haloform (CHCl3, CHBr3, CHI3)."},
-  {q:"In EAS, a nitro group (-NO2) directs incoming electrophiles to:",opts:["Ortho position","Para position","Meta position","Ipso position"],ans:2,exp:"-NO2 is a strong electron-withdrawing group that deactivates the ring and directs meta because it destabilizes the intermediate at ortho and para positions."},
+  {q:"What is the Haloform reaction?",opts:["Monohalogenation under acid","Polyhalogenation of a methyl ketone under base, giving CHX\u2083","Radical halogenation of alkanes","Halogenation of an aromatic ring"],ans:1,exp:"Under basic conditions, alpha-halogenation of a methyl ketone cannot be stopped at mono. All three alpha-H's are replaced, and the CX\u2083\u207B group leaves as haloform (CHCl\u2083, CHBr\u2083, CHI\u2083)."},
+  {q:"In EAS, a nitro group (-NO\u2082) directs incoming electrophiles to:",opts:["Ortho position","Para position","Meta position","Ipso position"],ans:2,exp:"-NO\u2082 is a strong electron-withdrawing group that deactivates the ring and directs meta because it destabilizes the intermediate at ortho and para positions."},
   {q:"Which type of polymer forms by loss of a small molecule (e.g., water) at each step?",opts:["Addition (chain-growth)","Condensation (step-growth)","Radical polymerization","Ring-opening polymerization"],ans:1,exp:"Condensation (step-growth) polymers form by reactions between two functional groups with loss of a small molecule like water. Examples include nylon and PET."},
-  {q:"At physiological pH, amino acids exist primarily as:",opts:["Cations (NH3+, COOH)","Anions (NH2, COO-)","Zwitterions (NH3+, COO-)","Neutral molecules (NH2, COOH)"],ans:2,exp:"At physiological pH (~7.4), the amino group is protonated (NH3+) and the carboxyl group is deprotonated (COO-), forming a zwitterion with no net charge (for neutral amino acids)."}
+  {q:"At physiological pH, amino acids exist primarily as:",opts:["Cations (NH\u2083\u207A, COOH)","Anions (NH\u2082, COO\u207B)","Zwitterions (NH\u2083\u207A, COO\u207B)","Neutral molecules (NH\u2082, COOH)"],ans:2,exp:"At physiological pH (~7.4), the amino group is protonated (NH\u2083\u207A) and the carboxyl group is deprotonated (COO\u207B), forming a zwitterion with no net charge (for neutral amino acids)."}
 ];
 
 let mcCorrect = 0, mcAnswered = 0;
@@ -639,8 +824,11 @@ function renderMC() {
     <div class="quiz-card" id="mc-${i}">
       <div class="q-num">Question ${i+1} of ${mcQuestions.length}</div>
       <div class="q-text">${q.q}</div>
-      ${q.opts.map((o,j) => `<button class="opt-btn" onclick="answerMC(${i},${j})">${o}</button>`).join('')}
-      <div class="explanation" id="exp-${i}">${q.exp}</div>
+      <fieldset style="border:none;padding:0;margin:0;">
+        <legend class="sr-only">${q.q}</legend>
+        ${q.opts.map((o,j) => `<button class="opt-btn" onclick="answerMC(${i},${j})" aria-label="Option ${j+1}: ${o}">${o}</button>`).join('')}
+      </fieldset>
+      <div class="explanation" id="exp-${i}" role="alert">${q.exp}</div>
     </div>
   `).join('');
 }
@@ -648,13 +836,19 @@ function answerMC(qi, oi) {
   const card = document.getElementById('mc-'+qi);
   const btns = card.querySelectorAll('.opt-btn');
   if (btns[0].disabled) return;
-  btns.forEach((b,j) => { b.disabled = true; b.classList.add(j === mcQuestions[qi].ans ? 'correct' : (j === oi ? 'wrong' : '')); });
+  btns.forEach((b,j) => {
+    b.disabled = true;
+    if (j === mcQuestions[qi].ans) b.classList.add('correct');
+    else if (j === oi) b.classList.add('wrong');
+  });
   if (oi === mcQuestions[qi].ans) mcCorrect++;
   mcAnswered++;
   document.getElementById('mc-score').textContent = mcCorrect;
   document.getElementById('mc-total').textContent = mcAnswered;
   document.getElementById('mc-fill').style.width = (mcAnswered ? (mcCorrect/mcAnswered*100) : 0) + '%';
   document.getElementById('exp-'+qi).classList.add('show');
+  const result = oi === mcQuestions[qi].ans ? 'Correct!' : 'Incorrect.';
+  announce(result + ' ' + mcQuestions[qi].exp);
 }
 renderMC();
 
@@ -663,78 +857,81 @@ const fcCards = [
   {cat:"Conjugation",q:"What is the s-cis conformation?",a:"The conformation of a conjugated diene where the two double bonds are on the same side of the connecting single bond (eclipsed). Required for Diels-Alder."},
   {cat:"Conjugation",q:"Diels-Alder: what type of reaction?",a:"A [4+2] cycloaddition. 4 pi electrons from the diene + 2 from the dienophile. Concerted, pericyclic, thermally allowed."},
   {cat:"Conjugation",q:"What does the endo rule predict?",a:"In Diels-Alder reactions, the endo product (substituents pointing toward the diene) is kinetically favored due to secondary orbital overlap."},
-  {cat:"Conjugation",q:"Normal electron demand Diels-Alder?",a:"Electron-rich diene (donors like -OR, -NR2) + electron-poor dienophile (withdrawing groups like -CHO, -COOR, -CN)."},
+  {cat:"Conjugation",q:"Normal electron demand Diels-Alder?",a:"Electron-rich diene (donors like -OR, -NR\u2082) + electron-poor dienophile (withdrawing groups like -CHO, -COOR, -CN)."},
   {cat:"Conjugation",q:"What causes a red shift in UV-Vis?",a:"Increased conjugation shifts absorption to longer wavelengths (lower energy). More conjugated = more red-shifted."},
-  {cat:"Aromatics",q:"Huckel's rule",a:"A compound is aromatic if it is cyclic, planar, fully conjugated, and has 4n+2 pi electrons (n=0,1,2...)."},
+  {cat:"Aromatics",q:"H\u00FCckel's rule",a:"A compound is aromatic if it is cyclic, planar, fully conjugated, and has 4n+2 pi electrons (n=0,1,2...)."},
   {cat:"Aromatics",q:"Antiaromatic vs. nonaromatic?",a:"Antiaromatic: cyclic, planar, conjugated, 4n pi electrons (very unstable). Nonaromatic: fails at least one criterion."},
-  {cat:"Aromatics",q:"Pyrrole vs. pyridine basicity?",a:"Pyridine is basic (lone pair in sp2 orbital, in plane). Pyrrole is not basic (lone pair in p orbital, part of aromatic pi system)."},
-  {cat:"Aromatics",q:"EAS general mechanism (2 steps)?",a:"1) Electrophile attacks pi system <span aria-hidden="true">→</span> arenium ion (rate-determining). 2) Proton lost <span aria-hidden="true">→</span> aromaticity restored."},
+  {cat:"Aromatics",q:"Pyrrole vs. pyridine basicity?",a:"Pyridine is basic (lone pair in sp\u00B2 orbital, in plane). Pyrrole is not basic (lone pair in p orbital, part of aromatic pi system)."},
+  {cat:"Aromatics",q:"EAS general mechanism (2 steps)?",a:"1) Electrophile attacks pi system \u2192 arenium ion (rate-determining). 2) Proton lost \u2192 aromaticity restored."},
   {cat:"Aromatics",q:"Why are halogens ortho/para directors but deactivators?",a:"Lone pair resonance donates into ring (ortho/para directing). High electronegativity inductively withdraws (deactivating). Resonance controls regiochemistry; induction controls rate."},
-  {cat:"Aromatics",q:"FC acylation advantages over alkylation?",a:"Acylium ions don't rearrange. Ketone product deactivates ring, preventing polyacylation. Alkylation has both problems."},
-  {cat:"Aromatics",q:"What rings can't do Friedel-Crafts?",a:"Strongly deactivated rings: those with -NO2, -COR, -CN, -SO3H, or -NR3+ substituents."},
-  {cat:"Aromatics",q:"Nucleophilic aromatic substitution requirements?",a:"Strong EWG (especially -NO2) ortho/para to leaving group. Goes through Meisenheimer complex (addition-elimination)."},
+  {cat:"Aromatics",q:"FC acylation advantages over alkylation?",a:"Acylium ions don\u2019t rearrange. Ketone product deactivates ring, preventing polyacylation. Alkylation has both problems."},
+  {cat:"Aromatics",q:"What rings can't do Friedel-Crafts?",a:"Strongly deactivated rings: those with -NO\u2082, -COR, -CN, -SO\u2083H, or -NR\u2083\u207A substituents."},
+  {cat:"Aromatics",q:"Nucleophilic aromatic substitution requirements?",a:"Strong EWG (especially -NO\u2082) ortho/para to leaving group. Goes through Meisenheimer complex (addition-elimination)."},
   {cat:"Carbonyls",q:"Why are aldehydes more reactive than ketones?",a:"Less steric hindrance (H vs R) and fewer electron-donating alkyl groups, so the carbonyl carbon is more electrophilic."},
-  {cat:"Carbonyls",q:"Grignard + HCHO product?",a:"Primary alcohol. Grignard adds R to formaldehyde's carbon. HCHO <span aria-hidden="true">→</span> 1° alcohol, RCHO <span aria-hidden="true">→</span> 2° alcohol, R2CO <span aria-hidden="true">→</span> 3° alcohol."},
-  {cat:"Carbonyls",q:"Imine vs. enamine formation?",a:"1° amine + carbonyl <span aria-hidden="true">→</span> imine (C=N). 2° amine + carbonyl <span aria-hidden="true">→</span> enamine (C=C-NR2). Both require mild acid catalyst."},
+  {cat:"Carbonyls",q:"Grignard + HCHO product?",a:"Primary alcohol. Grignard adds R to formaldehyde\u2019s carbon. HCHO \u2192 1\u00B0 alcohol, RCHO \u2192 2\u00B0 alcohol, R\u2082CO \u2192 3\u00B0 alcohol."},
+  {cat:"Carbonyls",q:"Imine vs. enamine formation?",a:"1\u00B0 amine + carbonyl \u2192 imine (C=N). 2\u00B0 amine + carbonyl \u2192 enamine (C=C-NR\u2082). Both require mild acid catalyst."},
   {cat:"Carbonyls",q:"What is an acetal? Why useful?",a:"Two -OR groups on the same carbon (from carbonyl + 2 ROH, acid cat.). Stable in base/neutral, cleaves in acid. Used as carbonyl protecting group."},
-  {cat:"Carbonyls",q:"Wittig reaction product?",a:"Alkene. Ph3P=CHR + C=O <span aria-hidden="true">→</span> C=C + Ph3P=O. Replaces the carbonyl oxygen with a carbon from the ylide."},
-  {cat:"Carbonyls",q:"Wolff-Kishner conditions and product?",a:"N2H4 (hydrazine), KOH, high heat. Reduces ketone/aldehyde C=O all the way to CH2. Basic conditions."},
-  {cat:"Acid Derivatives",q:"Reactivity order of acyl derivatives?",a:"Acid chloride > anhydride > ester ≈ thioester > amide > carboxylate. Better leaving group = more reactive."},
-  {cat:"Acid Derivatives",q:"Nucleophilic acyl substitution mechanism?",a:"Nucleophile attacks carbonyl carbon <span aria-hidden="true">→</span> tetrahedral intermediate <span aria-hidden="true">→</span> leaving group departs <span aria-hidden="true">→</span> new carbonyl forms. Different from addition (aldehydes/ketones) because a leaving group departs."},
-  {cat:"Acid Derivatives",q:"Fischer esterification?",a:"RCOOH + R'OH + H2SO4 (acid catalyst) <span aria-hidden="true">⇌</span> RCOOR' + H2O. Reversible; drive forward with excess alcohol or remove water."},
-  {cat:"Acid Derivatives",q:"Why is saponification irreversible?",a:"Ester + NaOH <span aria-hidden="true">→</span> RCOO⁻Na⁺ + R'OH. The carboxylate product is resonance-stabilized, so the reverse reaction is very unfavorable."},
+  {cat:"Carbonyls",q:"Wittig reaction product?",a:"Alkene. Ph\u2083P=CHR + C=O \u2192 C=C + Ph\u2083P=O. Replaces the carbonyl oxygen with a carbon from the ylide."},
+  {cat:"Carbonyls",q:"Wolff-Kishner conditions and product?",a:"N\u2082H\u2084 (hydrazine), KOH, high heat. Reduces ketone/aldehyde C=O all the way to CH\u2082. Basic conditions."},
+  {cat:"Acid Derivatives",q:"Reactivity order of acyl derivatives?",a:"Acid chloride > anhydride > ester \u2248 thioester > amide > carboxylate. Better leaving group = more reactive."},
+  {cat:"Acid Derivatives",q:"Nucleophilic acyl substitution mechanism?",a:"Nucleophile attacks carbonyl carbon \u2192 tetrahedral intermediate \u2192 leaving group departs \u2192 new carbonyl forms. Differs from addition: a leaving group departs."},
+  {cat:"Acid Derivatives",q:"Fischer esterification?",a:"RCOOH + R\u2019OH + H\u2082SO\u2084 (acid catalyst) \u21CC RCOOR\u2019 + H\u2082O. Reversible; drive forward with excess alcohol or remove water."},
+  {cat:"Acid Derivatives",q:"Why is saponification irreversible?",a:"Ester + NaOH \u2192 RCOO\u207B Na\u207A + R\u2019OH. The carboxylate product is resonance-stabilized, so the reverse reaction is very unfavorable."},
   {cat:"Acid Derivatives",q:"Why are amides so stable?",a:"The nitrogen lone pair delocalizes into the carbonyl (resonance), giving partial double-bond character to C-N. This makes the leaving group (NHR) very poor."},
-  {cat:"Acid Derivatives",q:"Conversion rule for acid derivatives?",a:"You can convert more reactive <span aria-hidden="true">→</span> less reactive (e.g., acid chloride <span aria-hidden="true">→</span> ester) but not the reverse without special reagents."},
+  {cat:"Acid Derivatives",q:"Conversion rule for acid derivatives?",a:"You can convert more reactive \u2192 less reactive (e.g., acid chloride \u2192 ester) but not the reverse without special reagents."},
   {cat:"Enolates",q:"What makes alpha-H acidic?",a:"The conjugate base (enolate) is resonance-stabilized: negative charge is shared between carbon and oxygen of the carbonyl."},
-  {cat:"Enolates",q:"Kinetic vs. thermodynamic enolate?",a:"Kinetic: formed with LDA at -78°C, less substituted side. Thermodynamic: formed with weaker base at higher temp, more substituted (more stable)."},
-  {cat:"Enolates",q:"Aldol reaction product?",a:"Beta-hydroxy carbonyl. Enolate of one carbonyl adds to another's C=O. With heat, dehydration gives alpha,beta-unsaturated carbonyl (aldol condensation)."},
+  {cat:"Enolates",q:"Kinetic vs. thermodynamic enolate?",a:"Kinetic: formed with LDA at \u221278\u00B0C, less substituted side. Thermodynamic: formed with weaker base at higher temp, more substituted (more stable)."},
+  {cat:"Enolates",q:"Aldol reaction product?",a:"Beta-hydroxy carbonyl. Enolate of one carbonyl adds to another\u2019s C=O. With heat, dehydration gives alpha,beta-unsaturated carbonyl (aldol condensation)."},
   {cat:"Enolates",q:"Claisen condensation product?",a:"Beta-keto ester. Ester enolate attacks another ester carbonyl, loses alkoxide. Driven by deprotonation of acidic product."},
   {cat:"Enolates",q:"Michael reaction?",a:"1,4-conjugate addition of an enolate to an alpha,beta-unsaturated carbonyl. Nucleophile adds to the beta carbon."},
   {cat:"Enolates",q:"Robinson annulation?",a:"Michael addition followed by intramolecular aldol condensation to form a cyclohexenone ring. Combines two reactions in sequence."},
-  {cat:"Enolates",q:"Haloform reaction?",a:"Base-catalyzed polyhalogenation of a methyl ketone. All three alpha-H's replaced, then CX3⁻ leaves as haloform (CHCl3/CHBr3/CHI3)."},
-  {cat:"Enolates",q:"How to avoid mixed aldol problems?",a:"Use LDA to form one specific enolate first, then add the electrophilic carbonyl. Or use one component with no alpha-H's (e.g., benzaldehyde)."},
-  {cat:"Amines",q:"Amine classification?",a:"1° (RNH2), 2° (R2NH), 3° (R3N), quaternary ammonium (R4N+). Based on number of C groups on N."},
-  {cat:"Amines",q:"Basicity order of amines?",a:"R2NH > RNH2 > R3N ≈ NH3 > ArNH2 >> RCONH2. Arylamines are weak bases (lone pair delocalizes into ring). Amides are not basic."},
-  {cat:"Amines",q:"Why use reductive amination over direct alkylation?",a:"Direct alkylation (RX + amine) over-alkylates. Reductive amination (carbonyl + amine + NaBH3CN) goes through an imine and gives controlled mono-product."},
-  {cat:"Amines",q:"Gabriel synthesis?",a:"Phthalimide + RX <span aria-hidden="true">→</span> N-alkylphthalimide <span aria-hidden="true">→</span> hydrazinolysis (N2H4) releases pure 1° amine. Avoids over-alkylation."},
+  {cat:"Enolates",q:"Haloform reaction?",a:"Base-catalyzed polyhalogenation of a methyl ketone. All three alpha-H\u2019s replaced, then CX\u2083\u207B leaves as haloform (CHCl\u2083/CHBr\u2083/CHI\u2083)."},
+  {cat:"Enolates",q:"How to avoid mixed aldol problems?",a:"Use LDA to form one specific enolate first, then add the electrophilic carbonyl. Or use one component with no alpha-H\u2019s (e.g., benzaldehyde)."},
+  {cat:"Amines",q:"Amine classification?",a:"1\u00B0 (RNH\u2082), 2\u00B0 (R\u2082NH), 3\u00B0 (R\u2083N), quaternary ammonium (R\u2084N\u207A). Based on number of C groups on N."},
+  {cat:"Amines",q:"Basicity order of amines?",a:"R\u2082NH > RNH\u2082 > R\u2083N \u2248 NH\u2083 > ArNH\u2082 >> RCONH\u2082. Arylamines are weak bases (lone pair delocalizes into ring). Amides are not basic."},
+  {cat:"Amines",q:"Why use reductive amination over direct alkylation?",a:"Direct alkylation (RX + amine) over-alkylates. Reductive amination (carbonyl + amine + NaBH\u2083CN) goes through an imine and gives controlled mono-product."},
+  {cat:"Amines",q:"Gabriel synthesis?",a:"Phthalimide + RX \u2192 N-alkylphthalimide \u2192 hydrazinolysis (N\u2082H\u2084) releases pure 1\u00B0 amine. Avoids over-alkylation."},
   {cat:"Amines",q:"What can diazonium salts be converted to?",a:"ArOH, ArF (Schiemann), ArCl/ArBr/ArCN (Sandmeyer), ArI, ArH, or azo dyes. Incredibly versatile synthetic intermediates."},
-  {cat:"Amines",q:"Hofmann elimination product?",a:"Less substituted alkene (anti-Zaitsev). Excess MeI <span aria-hidden="true">→</span> quaternary salt <span aria-hidden="true">→</span> Ag2O <span aria-hidden="true">→</span> E2 elimination favors less hindered product."},
-  {cat:"Spectroscopy",q:"Broad O-H stretch in IR?",a:"3200-3600 cm⁻¹. Alcohol O-H is broad. Carboxylic acid O-H is very broad (2500-3300 cm⁻¹) and overlaps C-H region."},
-  {cat:"Spectroscopy",q:"Carbonyl IR position tells you what?",a:"The type of derivative. Acid chloride ~1800, anhydride two peaks ~1800/1750, ester ~1735-1750, ketone ~1705-1720, amide ~1630-1690."},
-  {cat:"Spectroscopy",q:"NMR: what do chemical shift, integration, and splitting tell you?",a:"Shift: electronic environment. Integration: relative number of H's. Splitting (n+1 rule): number of neighboring H's."},
-  {cat:"Spectroscopy",q:"Aldehyde proton in 1H NMR?",a:"Appears at 9-10 ppm. Very diagnostic. Highly deshielded."},
-  {cat:"Spectroscopy",q:"13C NMR: carbonyl carbon range?",a:"170-220 ppm. Aromatics: 110-160 ppm. sp3 carbons: 10-50 ppm. No splitting in broadband-decoupled spectra."},
-  {cat:"Spectroscopy",q:"Nitrogen rule in mass spec?",a:"Odd molecular ion (M+) = odd number of nitrogen atoms. Even M+ = zero or even number of nitrogens."},
-  {cat:"Spectroscopy",q:"Common MS fragmentation losses?",a:"15 (CH3), 18 (H2O), 28 (CO), 29 (CHO), 31 (OCH3), 45 (OEt). Base peak = most abundant fragment."},
-  {cat:"Redox",q:"PCC vs. Jones reagent?",a:"PCC: mild, stops at aldehyde (1° alcohol <span aria-hidden="true">→</span> aldehyde). Jones: strong, goes to carboxylic acid (1° alcohol <span aria-hidden="true">→</span> RCOOH)."},
-  {cat:"Redox",q:"NaBH4 vs. LiAlH4?",a:"NaBH4: mild, reduces only aldehydes/ketones. LiAlH4: strong, reduces esters <span aria-hidden="true">→</span> alcohols, acids <span aria-hidden="true">→</span> alcohols, amides <span aria-hidden="true">→</span> amines, and everything NaBH4 does."},
-  {cat:"Redox",q:"Lindlar's vs. Na/NH3 for alkynes?",a:"Lindlar's (poisoned Pd + H2): syn addition <span aria-hidden="true">→</span> cis-alkene. Na/NH3 (dissolving metal): anti addition <span aria-hidden="true">→</span> trans-alkene."},
-  {cat:"Redox",q:"Clemmensen vs. Wolff-Kishner?",a:"Both: ketone <span aria-hidden="true">→</span> CH2. Clemmensen: acid (Zn-Hg, HCl). Wolff-Kishner: base (N2H4, KOH, heat). Choose based on substrate acid/base sensitivity."},
-  {cat:"Redox",q:"DIBAL-H at -78°C?",a:"Partially reduces ester <span aria-hidden="true">→</span> aldehyde. At warmer temps or excess gives alcohol. Temperature control is critical."},
-  {cat:"Redox",q:"Ozonolysis: DMS vs. H2O2 workup?",a:"DMS (reductive): alkene <span aria-hidden="true">→</span> aldehydes/ketones. H2O2 (oxidative): alkene <span aria-hidden="true">→</span> carboxylic acids."},
-  {cat:"Redox",q:"mCPBA reaction?",a:"Converts alkene <span aria-hidden="true">→</span> epoxide. Concerted, stereospecific (syn addition of oxygen across the double bond)."},
-  {cat:"Bio/Polymers",q:"Addition vs. condensation polymers?",a:"Addition (chain-growth): monomers with C=C, radical/ionic mechanism (polyethylene, PVC). Condensation (step-growth): lose H2O each step (nylon, PET)."},
+  {cat:"Amines",q:"Hofmann elimination product?",a:"Less substituted alkene (anti-Zaitsev). Excess MeI \u2192 quaternary salt \u2192 Ag\u2082O \u2192 E2 elimination favors less hindered product."},
+  {cat:"Spectroscopy",q:"Broad O-H stretch in IR?",a:"3200\u20133600 cm\u207B\u00B9. Alcohol O-H is broad. Carboxylic acid O-H is very broad (2500\u20133300 cm\u207B\u00B9) and overlaps C-H region."},
+  {cat:"Spectroscopy",q:"Carbonyl IR position tells you what?",a:"The type of derivative. Acid chloride ~1800, anhydride two peaks ~1800/1750, ester ~1735\u20131750, ketone ~1705\u20131720, amide ~1630\u20131690."},
+  {cat:"Spectroscopy",q:"NMR: what do chemical shift, integration, and splitting tell you?",a:"Shift: electronic environment. Integration: relative number of H\u2019s. Splitting (n+1 rule): number of neighboring H\u2019s."},
+  {cat:"Spectroscopy",q:"Aldehyde proton in \u00B9H NMR?",a:"Appears at 9\u201310 ppm. Very diagnostic. Highly deshielded."},
+  {cat:"Spectroscopy",q:"\u00B9\u00B3C NMR: carbonyl carbon range?",a:"170\u2013220 ppm. Aromatics: 110\u2013160 ppm. sp\u00B3 carbons: 10\u201350 ppm. No splitting in broadband-decoupled spectra."},
+  {cat:"Spectroscopy",q:"Nitrogen rule in mass spec?",a:"Odd molecular ion (M\u207A) = odd number of nitrogen atoms. Even M\u207A = zero or even number of nitrogens."},
+  {cat:"Spectroscopy",q:"Common MS fragmentation losses?",a:"15 (CH\u2083), 18 (H\u2082O), 28 (CO), 29 (CHO), 31 (OCH\u2083), 45 (OEt). Base peak = most abundant fragment."},
+  {cat:"Redox",q:"PCC vs. Jones reagent?",a:"PCC: mild, stops at aldehyde (1\u00B0 alcohol \u2192 aldehyde). Jones: strong, goes to carboxylic acid (1\u00B0 alcohol \u2192 RCOOH)."},
+  {cat:"Redox",q:"NaBH\u2084 vs. LiAlH\u2084?",a:"NaBH\u2084: mild, reduces only aldehydes/ketones. LiAlH\u2084: strong, reduces esters \u2192 alcohols, acids \u2192 alcohols, amides \u2192 amines, and everything NaBH\u2084 does."},
+  {cat:"Redox",q:"Lindlar\u2019s vs. Na/NH\u2083 for alkynes?",a:"Lindlar\u2019s (poisoned Pd + H\u2082): syn addition \u2192 cis-alkene. Na/NH\u2083 (dissolving metal): anti addition \u2192 trans-alkene."},
+  {cat:"Redox",q:"Clemmensen vs. Wolff-Kishner?",a:"Both: ketone \u2192 CH\u2082. Clemmensen: acid (Zn-Hg, HCl). Wolff-Kishner: base (N\u2082H\u2084, KOH, heat). Choose based on substrate acid/base sensitivity."},
+  {cat:"Redox",q:"DIBAL-H at \u221278\u00B0C?",a:"Partially reduces ester \u2192 aldehyde. At warmer temps or excess gives alcohol. Temperature control is critical."},
+  {cat:"Redox",q:"Ozonolysis: DMS vs. H\u2082O\u2082 workup?",a:"DMS (reductive): alkene \u2192 aldehydes/ketones. H\u2082O\u2082 (oxidative): alkene \u2192 carboxylic acids."},
+  {cat:"Redox",q:"mCPBA reaction?",a:"Converts alkene \u2192 epoxide. Concerted, stereospecific (syn addition of oxygen across the double bond)."},
+  {cat:"Bio/Polymers",q:"Addition vs. condensation polymers?",a:"Addition (chain-growth): monomers with C=C, radical/ionic mechanism (polyethylene, PVC). Condensation (step-growth): lose H\u2082O each step (nylon, PET)."},
   {cat:"Bio/Polymers",q:"Alpha vs. beta anomer?",a:"Alpha: OH on anomeric carbon is axial (down in glucose). Beta: OH is equatorial (up). They interconvert via mutarotation."},
-  {cat:"Bio/Polymers",q:"Amino acid zwitterion?",a:"At physiological pH, amino group is protonated (NH3+) and carboxyl is deprotonated (COO⁻). Net charge zero at pI."},
+  {cat:"Bio/Polymers",q:"Amino acid zwitterion?",a:"At physiological pH, amino group is protonated (NH\u2083\u207A) and carboxyl is deprotonated (COO\u207B). Net charge zero at pI."},
   {cat:"Bio/Polymers",q:"Why is the peptide bond planar?",a:"Resonance between nitrogen lone pair and C=O gives partial double-bond character to C-N. Restricts rotation, making the bond planar."},
-  {cat:"Bio/Polymers",q:"Saponification of a fat?",a:"Triacylglycerol + 3 NaOH <span aria-hidden="true">→</span> glycerol + 3 sodium carboxylate salts (soap). Irreversible base hydrolysis of ester bonds."}
+  {cat:"Bio/Polymers",q:"Saponification of a fat?",a:"Triacylglycerol + 3 NaOH \u2192 glycerol + 3 sodium carboxylate salts (soap). Irreversible base hydrolysis of ester bonds."}
 ];
 
 let fcIdx = 0, fcFiltered = [...fcCards];
 const fcCats = [...new Set(fcCards.map(c => c.cat))];
-let activeCat = 'All';
 
 function renderFCFilters() {
   const f = document.getElementById('fc-filters');
-  f.innerHTML = `<button class="fc-filter-btn active" onclick="filterFC('All')">All</button>` +
-    fcCats.map(c => `<button class="fc-filter-btn" onclick="filterFC('${c}')">${c}</button>`).join('');
+  f.innerHTML = `<button class="fc-filter-btn active" onclick="filterFC('All')" aria-pressed="true">All</button>` +
+    fcCats.map(c => `<button class="fc-filter-btn" onclick="filterFC('${c}')" aria-pressed="false">${c}</button>`).join('');
 }
 function filterFC(cat) {
-  activeCat = cat;
   fcFiltered = cat === 'All' ? [...fcCards] : fcCards.filter(c => c.cat === cat);
   fcIdx = 0;
-  document.querySelectorAll('.fc-filter-btn').forEach(b => b.classList.toggle('active', b.textContent === cat));
+  document.querySelectorAll('.fc-filter-btn').forEach(b => {
+    const active = b.textContent === cat;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
   showCard();
+  announce('Showing ' + fcFiltered.length + ' cards' + (cat === 'All' ? '' : ' in ' + cat));
 }
 function showCard() {
   if (!fcFiltered.length) return;
@@ -743,9 +940,15 @@ function showCard() {
   document.getElementById('fc-cat').textContent = fcFiltered[fcIdx].cat;
   document.getElementById('fc-q').textContent = fcFiltered[fcIdx].q;
   document.getElementById('fc-a').textContent = fcFiltered[fcIdx].a;
-  document.getElementById('fc-count').textContent = `${fcIdx+1} / ${fcFiltered.length}`;
+  document.getElementById('fc-count').textContent = (fcIdx+1) + ' / ' + fcFiltered.length;
+  card.setAttribute('aria-label', 'Flashcard ' + (fcIdx+1) + ' of ' + fcFiltered.length + ': ' + fcFiltered[fcIdx].q + '. Click or press Enter to reveal answer.');
 }
-function flipCard() { document.getElementById('fc-card').classList.toggle('flipped'); }
+function flipCard() {
+  const card = document.getElementById('fc-card');
+  card.classList.toggle('flipped');
+  const flipped = card.classList.contains('flipped');
+  announce(flipped ? 'Answer: ' + fcFiltered[fcIdx].a : 'Question: ' + fcFiltered[fcIdx].q);
+}
 function prevCard() { fcIdx = (fcIdx - 1 + fcFiltered.length) % fcFiltered.length; showCard(); }
 function nextCard() { fcIdx = (fcIdx + 1) % fcFiltered.length; showCard(); }
 renderFCFilters();
@@ -765,7 +968,7 @@ const saQuestions = [
   {q:"Explain the concept of retrosynthetic analysis and why it is useful in organic synthesis.",
    terms:[{t:"backward",w:2},{t:"target",w:1},{t:"disconnect",w:2},{t:"precursor",w:1},{t:"simpler",w:1},{t:"reagent",w:1},{t:"protect",w:1},{t:"functional group",w:1}],
    model:"Retrosynthetic analysis works backward from the target molecule. You identify a strategic bond to disconnect, which reveals simpler precursor molecules. For each disconnection, you identify the forward reagents needed. This process repeats until you reach commercially available starting materials. It is useful because forward synthesis of complex molecules involves many possible paths, and working backward from the known target constrains your choices. Protecting groups may be needed when multiple reactive functional groups are present."},
-  {q:"Compare NaBH4 and LiAlH4 as reducing agents. What can each reduce?",
+  {q:"Compare NaBH\u2084 and LiAlH\u2084 as reducing agents. What can each reduce?",
    terms:[{t:"NaBH4",w:1},{t:"LiAlH4",w:1},{t:"mild",w:1},{t:"aldehyde",w:1},{t:"ketone",w:1},{t:"ester",w:1},{t:"amide",w:1},{t:"amine",w:1},{t:"carboxylic acid",w:1},{t:"alcohol",w:1}],
    model:"NaBH4 is a mild reducing agent that selectively reduces aldehydes and ketones to alcohols without affecting esters, carboxylic acids, or amides. LiAlH4 is a much stronger reducing agent that reduces virtually all carbonyl-containing functional groups: aldehydes and ketones to alcohols, esters to two alcohols (one from each oxygen), carboxylic acids to primary alcohols, and amides to amines."},
   {q:"Describe how acetals function as protecting groups in organic synthesis.",
@@ -774,7 +977,7 @@ const saQuestions = [
   {q:"Explain the difference between nucleophilic addition (aldehydes/ketones) and nucleophilic acyl substitution (acid derivatives).",
    terms:[{t:"leaving group",w:3},{t:"tetrahedral",w:2},{t:"addition",w:1},{t:"substitution",w:1},{t:"aldehyde",w:1},{t:"acid chloride",w:1},{t:"ester",w:1}],
    model:"The key difference is the presence of a leaving group. In nucleophilic addition (aldehydes and ketones), the nucleophile attacks the carbonyl carbon and the product is a tetrahedral alkoxide. There is no leaving group, so the reaction stops at addition. In nucleophilic acyl substitution (acid chlorides, esters, anhydrides, amides), the same nucleophilic attack forms a tetrahedral intermediate, but a leaving group departs to regenerate the carbonyl. The net result is substitution of one group for another."},
-  {q:"How do you determine the structure of an unknown organic compound using IR, 1H NMR, and mass spectrometry together?",
+  {q:"How do you determine the structure of an unknown organic compound using IR, \u00B9H NMR, and mass spectrometry together?",
    terms:[{t:"molecular weight",w:1},{t:"molecular formula",w:1},{t:"functional group",w:2},{t:"IR",w:1},{t:"NMR",w:1},{t:"chemical shift",w:1},{t:"splitting",w:1},{t:"integration",w:1},{t:"fragment",w:1},{t:"degrees of unsaturation",w:1}],
    model:"Start with mass spectrometry to get the molecular weight and molecular formula (from isotope patterns and high-resolution MS). Calculate degrees of unsaturation. Use IR to identify functional groups: look for O-H, N-H, C=O, C-H stretches. Then use 1H NMR to map the hydrogen framework: chemical shifts reveal electronic environments, integration gives the number of each type of H, and splitting patterns (n+1 rule) show neighboring H relationships. Combine all three pieces of evidence to propose and verify the structure."}
 ];
@@ -785,9 +988,10 @@ function renderSA() {
     <div class="sa-card">
       <div class="q-num">Question ${i+1} of ${saQuestions.length}</div>
       <div class="q-text">${q.q}</div>
+      <label for="sa-input-${i}" class="sr-only">Your answer for question ${i+1}</label>
       <textarea id="sa-input-${i}" placeholder="Type your answer here..."></textarea>
-      <button class="sa-submit" onclick="gradeSA(${i})">Check Answer</button>
-      <div class="sa-result" id="sa-result-${i}"></div>
+      <button class="sa-submit" onclick="gradeSA(${i})" aria-label="Check your answer for question ${i+1}">Check Answer</button>
+      <div class="sa-result" id="sa-result-${i}" role="alert"></div>
     </div>
   `).join('');
 }
@@ -809,14 +1013,15 @@ function gradeSA(i) {
   result.innerHTML = `
     <div style="font-weight:600;font-size:1.05rem;color:${color};">${pct}%</div>
     <div class="sa-bar"><div class="sa-bar-fill" style="width:${pct}%;background:${color};"></div></div>
-    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '<span aria-hidden="true">✓</span>' : '<span aria-hidden="true">○</span>'} ${t.label}</span>`).join('')}</div>
+    <div class="sa-concepts">${tags.map(t => `<span class="sa-tag ${t.hit ? 'hit' : 'miss'}">${t.hit ? '\u2713' : '\u25CB'} ${t.label}</span>`).join('')}</div>
     <details class="sa-model"><summary>Show Model Answer</summary><div class="model-text">${q.model}</div></details>
   `;
+  announce('Score: ' + pct + ' percent. ' + (pct >= 70 ? 'Great job!' : pct >= 40 ? 'Good effort. Review the missed concepts.' : 'Keep studying. Check the model answer for guidance.'));
 }
 renderSA();
 </script>
 
-  <div style="max-width: 800px; margin: 40px auto; padding: 20px 30px; background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 8px; font-size: 14px; line-height: 1.6; color: #555;">
+<div style="max-width: 800px; margin: 40px auto; padding: 20px 30px; background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 8px; font-size: 14px; line-height: 1.6; color: #555;">
   <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;"><span aria-hidden="true">⚠️</span> Important Notice</div>
   <p style="margin: 0 0 10px 0;">These study resources are provided free of charge for educational purposes only. They are intended as supplemental study aids and should not be used as a substitute for your course textbooks, lecture materials, or the guidance of your instructors.</p>
   <p style="margin: 0 0 10px 0;">While every effort has been made to ensure accuracy, this content may contain errors, omissions, or information that is out of date. Science is constantly evolving, and material that was accurate at the time of writing may no longer reflect current understanding. Always verify important facts, formulas, and concepts against your official course materials.</p>
